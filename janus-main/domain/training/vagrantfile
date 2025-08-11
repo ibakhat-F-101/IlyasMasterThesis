@@ -1,0 +1,56 @@
+VAGRANT_CONFIG_VERSION = "2"
+ANSIBLE_COMPATIBILITY_MODE = "2.13"
+VM_NAME_VB = "training"
+VM_HOSTNAME = "vagrant"
+BOX_RAM_MB = "4096"
+BOX_CPUS_COUNT = 4
+STATIC_IP = "10.10.14.12"
+PATH_TO_PASSWORD_VAULT = "user_group_vars/password_vault/password_vault.txt"
+BOX_BASE = "antitrust-ageless-custard-unreached/janus"
+
+# Function to provision services with Ansible
+def provision_with_ansible(training, service)
+  playbook_path = "#{service}/#{service}.yml"
+  training.vm.provision "ansible" do |ans|
+    ans.compatibility_mode = "2.0"
+    ans.playbook = playbook_path
+    ans.inventory_path = "inventory/inventory.ini"
+    ans.verbose = "v"
+    ans.vault_password_file = PATH_TO_PASSWORD_VAULT
+  end
+end
+
+Vagrant.configure(VAGRANT_CONFIG_VERSION) do |config|
+  config.vm.define VM_NAME_VB do |training|
+    # Basic VM config
+    training.vm.box = BOX_BASE
+    training.vm.hostname = VM_HOSTNAME
+    training.vm.post_up_message = File.read("post_up_message.txt")
+    training.vm.network "private_network", ip: STATIC_IP
+
+  # VirtualBox specific config
+  training.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.name = VM_NAME_VB
+    vb.memory = BOX_RAM_MB
+    vb.cpus = BOX_CPUS_COUNT
+  end
+
+  training.vm.provision "ansible" do |ans|
+    ans.compatibility_mode = "2.0"
+    ans.inventory_path = "inventory/inventory.ini"
+    ans.playbook = "common/common.yml"
+    ans.verbose = "v"
+  end 
+
+  services_to_provision = [] 
+  services_to_provision.each do |service|
+    provision_with_ansible(training, service)
+  end
+end
+end
+  
+
+
+
+

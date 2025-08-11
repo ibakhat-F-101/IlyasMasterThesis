@@ -1,0 +1,9 @@
+---
+molecule-test-pipeline:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "parent_pipeline"
+    - if: $CI_MERGE_REQUEST_ID
+  script:
+    - cd molecule
+    - molecule verify
+  retry: 2

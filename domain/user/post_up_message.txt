@@ -1,0 +1,19 @@
+#############################################
+🚀 Janus Services Deployment Report 🚀
+#############################################
+
+🌍 Access Services via Web (local machine):
+
+💌 Mattermost + Focalboard:  http://localhost:8081  
+🔁 SyncThing:                http://localhost:8082           
+📞 Jitsi Meet:               https://localhost:8443
+📂 Nextcloud:                http://localhost:8084
+💼 Bitwarden:                https://localhost:8444
+📝 Drawio:                   https://localhost:8446     
+📜 codiMD:                   http://localhost:8086  
+💰 Invoice Ninja:            http://localhost:8087      
+📖 logseq:                   http://localhost:8088  
+
+🎉 Explore and Enjoy! 🎉
+
+👋 Greetings from your friendly cyber-intern! 👾

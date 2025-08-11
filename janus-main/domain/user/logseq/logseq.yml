@@ -1,0 +1,17 @@
+---
+- name: Configure Logseq
+  hosts: 10.10.10.12 moleculeTest
+  gather_facts: false
+  connection: local
+
+  remote_user: "{{user_var}}"
+
+  vars_files:
+    - ../local_or_remote.yml
+
+  vars:
+    unsecure_port: 8088
+    IP: 127.0.0.1
+
+  tasks:
+    - include_tasks: /janus/services/templates/logseq/logseq.yml

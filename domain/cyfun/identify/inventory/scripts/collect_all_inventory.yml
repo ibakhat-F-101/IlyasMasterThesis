@@ -1,0 +1,130 @@
+---
+- name: Collect all inventory for CyFun ID.AM (AM-1 to AM-3)
+  hosts: user_domain
+  connection: local
+  gather_facts: yes
+  remote_user: "{{ user_var }}"
+
+  vars_files:
+    - ../../../../user/local_or_remote.yml
+
+  tasks:
+    # Read auto-collected infrastructure assets
+    - name: Slurp infrastructure assets
+      slurp:
+        src: ../../assets/output/assets.yml
+      register: raw_infra
+
+    - name: Parse infrastructure assets YAML
+      set_fact:
+        infra: "{{ raw_infra.content | b64decode | from_yaml }}"
+
+    # Read auto-collected software inventory
+    - name: Slurp software inventory
+      slurp:
+        src: ../../software/output/assets_software.yml
+      register: raw_soft
+
+    - name: Parse software inventory YAML
+      set_fact:
+        soft: "{{ raw_soft.content | b64decode | from_yaml }}"
+
+    # Simplify docker service names and remove versions
+    - name: Extract simplified docker service names (first part before dash)
+      set_fact:
+        simplified_docker_services: >-
+          {{
+            soft[0].software.docker_services
+            | map(attribute='name')
+            | map('regex_replace', '-.*$', '')
+            | list
+            | unique
+          }}
+
+    # Remove packages and keep simplified docker services only
+    - name: Strip packages and apply simplified docker service names
+      set_fact:
+        soft: >-
+          {{
+            {
+              'inventory_type': soft[0].inventory_type,
+              'host': soft[0].host,
+              'collected_on': soft[0].collected_on,
+              'os': soft[0].os,
+              'software': {
+                'docker_services': simplified_docker_services | map('regex_replace', '(-.*$)', '') | list | unique
+              }
+            }
+          }}
+
+    # Read information types
+    - name: Slurp information types
+      slurp:
+        src: ../../information/manuals/assets_information.yml
+      register: raw_info
+
+    - name: Parse information types YAML
+      set_fact:
+        info: "{{ raw_info.content | b64decode | from_yaml }}"
+
+    # Read manual assets
+    - name: Slurp manual assets
+      slurp:
+        src: ../../assets/manuals/manual-assets.yml
+      register: raw_manual_assets
+
+    - name: Parse manual assets YAML
+      set_fact:
+        manual_assets: "{{ raw_manual_assets.content | b64decode | from_yaml }}"
+
+    # Read manual software
+    - name: Slurp manual software
+      slurp:
+        src: ../../software/manuals/manual_software.yml
+      register: raw_manual_soft
+
+    - name: Parse manual software YAML
+      set_fact:
+        manual_soft: "{{ raw_manual_soft.content | b64decode | from_yaml }}"
+
+    # Filter out entries not yet filled
+    - name: Filter manual assets (ignore TO_BE_FILLED)
+      set_fact:
+        valid_manual_assets: |
+          {{
+            manual_assets.assets
+            | rejectattr('id', 'search', 'TO_BE_FILLED')
+            | list
+          }}
+
+    - name: Filter manual software (ignore TO_BE_FILLED)
+      set_fact:
+        valid_manual_software: |
+          {{
+            manual_soft.software
+            | rejectattr('id', 'search', 'TO_BE_FILLED')
+            | list
+          }}
+
+    # Assemble full inventory
+    - name: Assemble full inventory
+      set_fact:
+        full_inventory:
+          collected_on: "{{ ansible_date_time.date }}"
+          host: "{{ ansible_hostname }}"
+          infrastructure: "{{ infra.assets }}"
+          software_auto: "{{ [soft] }}"
+          software_manual: "{{ valid_manual_software }}"
+          information_types: "{{ info.information_types }}"
+          assets_manual: "{{ valid_manual_assets }}"
+
+    # Write combined inventory to file
+    - name: Save full inventory to inventory.yml
+      copy:
+        dest: "/janus/domain/cyfun/identify/inventory/manuals/inventory.yml"
+        content: "{{ full_inventory | to_nice_yaml(indent=2) }}"
+        mode: '0644'
+
+    - name: Confirm completion
+      debug:
+        msg: "✅ collect_all_inventory.yml executed successfully; inventory saved to {{ playbook_dir }}/inventory.yml"

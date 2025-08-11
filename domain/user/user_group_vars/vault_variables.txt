@@ -1,0 +1,22 @@
+# Bitwarden
+vault_user_password_bitwarden
+# Invoice Ninja
+vault_in_password_invoice_ninja
+vault_db_password_invoice_ninja
+vault_mysql_root_password_invoice_ninja
+# Jitsi Meet
+## /
+# Mattermost (+ Focalboard)
+## /
+# Nextcloud
+vault_mysql_password_nextcloud
+vault_nextcloud_admin_password_nextcloud
+# Syncthing
+vault_syncthing_admin_password
+# Drawio
+## /
+# codiMD
+vault_postgres_password_codimd
+# YOURLS
+vault_db_password_yourls
+vault_dashboard_password_yourls

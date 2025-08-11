@@ -1,0 +1,152 @@
+---
+- name: Create Bitwarden user
+  user:
+    name: bitwarden
+    shell: /bin/bash
+    state: present
+########################################
+- name: Set password for Bitwarden user
+  user:
+    name: bitwarden
+    password: "{{ user_password_bitwarden }}"
+    update_password: always
+########################################
+# Required to set bitwarden user
+# https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
+########################################
+- name: Install ACL for bitwarden user
+  apt:
+    name: acl
+    state: present
+########################################
+- name: Install Python modules
+  apt:
+    name: python3-pexpect
+    state: present
+########################################
+- name: Create Docker group
+  group:
+    name: docker
+    state: present
+########################################
+- name: Add Bitwarden user to Docker group
+  user:
+    name: bitwarden
+    groups: docker
+    append: true
+########################################
+- name: Create Bitwarden directory
+  file:
+    path: /opt/bitwarden
+    state: directory
+########################################
+- name: Set permissions for the Bitwarden directory
+  file:
+    path: /opt/bitwarden
+    mode: '0700'
+    recurse: true
+########################################
+- name: Set Bitwarden user as owner of the Bitwarden directory
+  file:
+    path: /opt/bitwarden
+    owner: bitwarden
+    group: bitwarden
+    recurse: true
+########################################
+- name: Download and set permissions for bitwarden.sh
+  become_user: bitwarden
+  shell: |
+    curl -Lso bitwarden.sh "{{ bitwarden_url }}"
+    chmod 700 bitwarden.sh
+  args:
+    chdir: /opt/bitwarden
+########################################
+- name: Check if Bitwarden is already installed
+  stat:
+    path: /opt/bitwarden/bwdata
+  register: bwdata_path
+##########################################
+- name: Run Bitwarden installer script with expect module
+  become_user: bitwarden
+  expect:
+    timeout: 300
+    command: ./bitwarden.sh install
+    responses:
+      "Enter the domain name for your Bitwarden instance": "{{ IP }}\n"
+      "Do you want to use Let's Encrypt to generate a free SSL certificate": "{{ use_lets_encrypt }}\n"
+      "Enter the database name for your Bitwarden instance": "{{ bitwarden_db_name }}\n"
+      "Enter your installation id": "{{ installation_id }}\n"
+      "Enter your installation key": "{{ installation_key }}\n"
+      "Enter your region": "{{ bitwarden_region }}\n"
+      "Do you have a SSL certificate to use": "{{ have_ssl_certificate }}\n"
+      "Do you want to generate a self-signed SSL certificate": "{{ generate_self_signed_ssl }}\n"
+    echo: true
+    chdir: /opt/bitwarden
+  when: bwdata_path.stat is defined and not bwdata_path.stat.exists # fix issue with vagrant reload -provision
+
+########################################
+- name: Configure '/opt/bitwarden/bwdata/env/global.override.env'
+  become_user: bitwarden
+  lineinfile:
+    path: /opt/bitwarden/bwdata/env/global.override.env
+    regexp: '{{item.From}}'
+    line: '{{item.To}}'
+    state: present
+  with_items:
+    - {From: 'globalSettings__mail__replyToEmail=no-reply@192.168.56.175',
+       To: 'globalSettings__mail__replyToEmail={{ reply_to_email }}'
+    }
+    - {From: 'globalSettings__mail__smtp__host=REPLACE',
+       To: 'globalSettings__mail__smtp__host={{ smtp_host }}'
+    }
+    - {From: 'globalSettings__mail__smtp__port=587',
+       To: 'globalSettings__mail__smtp__port={{ smtp_port }}'
+    }
+    - {From: 'globalSettings__mail__smtp__ssl=false',
+       To: 'globalSettings__mail__smtp__ssl={{ smtp_ssl }}'
+    }
+    - {From: 'globalSettings__mail__smtp__username=REPLACE',
+       To: 'globalSettings__mail__smtp__username={{ smtp_username }}'
+    }
+    - {From: 'globalSettings__mail__smtp__password=REPLACE',
+       To: 'globalSettings__mail__smtp__password={{ smtp_password }}'
+    }
+    - {From: 'globalSettings__disableUserRegistration=false',
+       To: 'globalSettings__disableUserRegistration=
+        {{ disable_user_registration }}'
+    }
+    - {From: 'adminSettings__admins=',
+       To: 'adminSettings__admins={{ admin_settings_admins }}'
+    }
+########################################
+- name: Add last line at '/opt/bitwarden/bwdata/env/global.override.env'
+  become_user: bitwarden
+  lineinfile:
+    path: /opt/bitwarden/bwdata/env/global.override.env
+    line: 'globalSettings__mail__smtp__startTls=true'
+    state: present
+#######################################
+- name: Modify docker-compose.yml using config.yml in Bitwarden
+  become_user: bitwarden
+  replace:
+    path: /opt/bitwarden/bwdata/config.yml
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  loop:
+    - regexp: 'http_port:.*'
+      replace: 'http_port: 8089'
+    - regexp: 'https_port:.*'
+      replace: 'https_port: 8444'
+
+########################################
+- name: Rebuild Bitwarden to reflect changes
+  become_user: bitwarden
+  shell: "./bitwarden.sh rebuild"
+  args:
+    chdir: /opt/bitwarden
+########################################
+- name: Start Bitwarden
+  become_user: bitwarden
+  shell: "./bitwarden.sh start"
+  args:
+    chdir: /opt/bitwarden

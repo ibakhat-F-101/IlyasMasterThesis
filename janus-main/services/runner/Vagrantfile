@@ -1,0 +1,30 @@
+VAGRANT_CONFIG_VERSION = "2"
+ANSIBLE_COMPATIBILITY_MODE = "2.0"
+VM_NAME_VB = "runner"
+VM_HOSTNAME = "vagrant"
+VM_MEMORY = 1024
+VM_CPU = 1
+BOX_BASE = "debian/bookworm64"
+JANUS_RUNNER_MEMORY = 1024
+JANUS_RUNNER_CPUS = 1
+
+Vagrant.configure(VAGRANT_CONFIG_VERSION) do |config|
+  config.vm.define VM_NAME_VB do |user|
+    user.vm.box = BOX_BASE
+    user.vm.hostname = VM_HOSTNAME
+    user.vm.post_up_message = File.read("runner_post_up_message.txt")
+    
+  user.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.name = VM_NAME_VB
+    vb.memory = JANUS_RUNNER_MEMORY
+    vb.cpus = JANUS_RUNNER_CPUS
+  end  
+
+  user.vm.provision :ansible_local do |ans|
+    ans.compatibility_mode = ANSIBLE_COMPATIBILITY_MODE
+    ans.playbook = "vmRunner.yml"
+    ans.verbose = "v"
+  end 
+end
+end

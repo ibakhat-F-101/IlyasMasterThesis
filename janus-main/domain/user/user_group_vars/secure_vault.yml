@@ -1,0 +1,142 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    # Define variables for file paths
+    vault_file: "vault.yml"
+    decrypted_vault_file: "/tmp/decrypted_vault.yml"
+    encrypted_vault_file: "vault.yml"
+    password_file: "password_vault/password_vault.txt"
+    number_of_words_in_password: 12
+
+    password_variables:
+      - vault_in_password_invoice_ninja
+      - vault_db_password_invoice_ninja
+      - vault_mysql_root_password_invoice_ninja
+      - vault_mysql_password_nextcloud
+      - vault_nextcloud_admin_password_nextcloud
+      - vault_postgres_password_codimd
+      - vault_db_password_yourls          # Default password : yourls_password
+      - vault_dashboard_password_yourls   # Default password : yourls_password
+
+  tasks:
+    #############################################
+    - name: Install diceware
+      become: true
+      ansible.builtin.package:
+        name: diceware
+        state: present
+    #############################################
+    - name: Decrypt Vault for Initial Comparison
+      shell: ansible-vault decrypt {{ vault_file }} --output {{ decrypted_vault_file }} --vault-password-file {{ password_file }}
+      args:
+        executable: /bin/bash
+      register: initial_decrypt
+      ignore_errors: true
+    #############################################
+    - name: Make a Copy of the Initial Vault Contents for later comparison
+      shell: cat {{ decrypted_vault_file }}
+      register: initial_vault_contents
+      when: initial_decrypt.rc == 0
+      changed_when: false
+    #############################################
+    - name: Generate a Random Password for use in the vault
+      shell: diceware --num {{ number_of_words_in_password }} --no-caps --delimiter "-" --wordlist "en_eff"
+      register: generated_password
+      changed_when: false
+    #############################################
+    - name: Write the New Password to a Temporary File
+      copy:
+        content: "{{ generated_password.stdout }}"
+        dest: "password_vault/new_password_vault.txt"
+        mode: "0600"
+    #############################################
+    - name: Test - Verify New Password File Creation
+      stat:
+        path: "password_vault/new_password_vault.txt"
+      register: new_password_file_stat
+    #############################################
+    - name: Assert New Password File Exists
+      assert:
+        that: new_password_file_stat.stat.exists
+        fail_msg: "New password file does not exist"
+    #############################################
+    - name: Copy 'template_vault.yml' to 'vault.yml'
+      ansible.builtin.copy:
+        src: template_vault.yml
+        dest: vault.yml
+        mode: "0600"
+    #############################################
+    - name: Replace vault_smtp_password line
+      ansible.builtin.replace:
+        path: vault.yml
+        regexp: '^vault_smtp_password:.*$'
+        replace: "vault_smtp_password: WHS@EAT*gPh$2q*xX8dhfydHgsv#Y4Q7"
+    #############################################
+    - name: Replace vault_smtp_password line for dockerfile
+      ansible.builtin.replace:
+        path: vault.yml
+        regexp: '^vault_smtp_password_dockerfile:.*$'
+        replace: "vault_smtp_password_dockerfile: WHS@EAT*gPh$$2q*xX8dhfydHgsv#Y4Q7"
+    #############################################
+    # All passwords are generated using diceware => diceware --num {{ number_of_words_in_password }} --no-caps --delimiter "-" --wordlist "en_eff"
+    # Generating a password for each of the variables in 'password_variables' and directly replacing them in the vault file
+    - name: Generate and replace passwords for each variable
+      include_tasks: generate_and_replace_password.yml
+      loop: "{{ password_variables }}"
+      loop_control:
+        loop_var: password_variable
+    #############################################
+    # Special tasks to generate passwords for the services
+    - name: Generate password for Syncthing
+      command: python3 gen_passwd/gen_passwd_syncthing.py
+    - name: Generate password for Bitwarden
+      command: python3 gen_passwd/gen_passwd_bitwarden.py
+    #############################################
+    - name: Encrypt the Vault with the New Password
+      shell: ansible-vault encrypt {{ vault_file }} --output {{ encrypted_vault_file }} --vault-password-file password_vault/new_password_vault.txt
+      args:
+        executable: /bin/bash
+    #############################################
+    - name: Replace the Old Password File with the New One
+      command: mv password_vault/new_password_vault.txt password_vault/password_vault.txt
+    #############################################
+    - name: Test - Verify Password File Replacement and Content
+      shell: cat password_vault/password_vault.txt
+      register: password_file_content
+      changed_when: false
+    #############################################
+    - name: Assert Password File Contains New Password
+      assert:
+        that:
+          - password_file_content.stdout == generated_password.stdout
+        fail_msg: "Password file does not contain the new password"
+    #############################################
+    #############################################
+    # Final decryption for content comparison
+    #############################################
+    - name: Decrypt Vault for Final Comparison
+      shell: ansible-vault decrypt {{ vault_file }} --output {{ decrypted_vault_file }} --vault-password-file {{ password_file }}
+      args:
+        executable: /bin/bash
+      register: final_decrypt
+      ignore_errors: true
+    #############################################
+    - name: Make a Copy of the Final Vault Contents
+      shell: cat {{ decrypted_vault_file }}
+      register: final_vault_contents
+      when: final_decrypt.rc == 0
+      changed_when: false
+    #############################################
+    - name: Compare Initial and Final Vault Contents to Confirm Changes
+      assert:
+        that:
+          - initial_vault_contents.stdout != final_vault_contents.stdout
+        fail_msg: "Vault contents did not change after modifications. Did you forget to uncomment passwords from the secure_vault.yml ?"
+    #############################################
+    - name: Remove the Temporary Decrypted Vault File
+      file:
+        path: /tmp/decrypted_vault.yml
+        state: absent

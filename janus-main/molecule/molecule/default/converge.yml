@@ -1,0 +1,19 @@
+---
+- name: Converge
+  hosts: moleculeTest
+  gather_facts: false
+
+  tasks:
+    - name: Testing playbooks
+      ansible.builtin.debug:
+        msg: "This is the effective test of playbooks"
+
+- import_playbook: playbooks/bitwarden/bitwarden.yml
+- import_playbook: playbooks/syncthing/syncthing.yml
+- import_playbook: playbooks/codimd/codimd.yml
+- import_playbook: playbooks/drawio/drawio.yml
+- import_playbook: playbooks/invoiceninja/invoiceninja.yml
+- import_playbook: playbooks/jitsi/jitsi.yml
+- import_playbook: playbooks/logseq/logseq.yml
+- import_playbook: playbooks/nextcloud/nextcloud.yml
+- import_playbook: playbooks/mattermost/mattermost.yml

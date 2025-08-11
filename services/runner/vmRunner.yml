@@ -1,0 +1,55 @@
+---
+- name: Start gitlab runner
+  hosts: all
+  gather_facts: false
+  connection: local
+  become: true
+
+  vars:
+    - runner_name: janus-runner-testing
+    - executor: shell
+    - registration_token: GR1348941WVa1pdzz4qPwRm1K22ke # Replace with your gitlab registration token and remove after use
+
+  tasks:
+    - name: Create a GitLab Runner user
+      user:
+        name: gitlab-runner
+        comment: 'GitLab Runner'
+        create_home: true
+        shell: /bin/bash
+
+    - name: Download the binary for your system
+      get_url:
+        url: https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64
+        dest: /usr/local/bin/gitlab-runner
+        mode: '755'
+        timeout: 300
+
+    - name: Remove gitlab-runner if it exists
+      command: gitlab-runner uninstall
+      ignore_errors: true
+
+    - name: Install gitlab runner
+      command:
+        argv:
+          - gitlab-runner
+          - install
+          - --user=gitlab-runner
+      args:
+        chdir: /home/gitlab-runner
+
+    - name: Register gitlab shell runner
+      command: |
+        gitlab-runner register \
+        --non-interactive \
+        --url "https://gitlab.com/" \
+        --registration-token "{{ registration_token }}" \
+        --executor "{{ executor }}" \
+        --description  "{{ runner_name }}" \
+        --tag-list "" \
+        --run-untagged="true" \
+        --locked="true" \
+        --access-level="ref_protected" \
+
+    - name: Start the runner
+      command: gitlab-runner start

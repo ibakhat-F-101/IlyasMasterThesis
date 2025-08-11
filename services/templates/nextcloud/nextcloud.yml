@@ -1,0 +1,74 @@
+---
+########################################
+# Installation steps here : https://github.com/nextcloud/docker
+########################################
+- name: Create a Nextcloud directory
+  file:
+    path: /home/{{ user_var }}/nextcloud
+    state: directory
+##########################
+- name: Create a persistent Nextcloud data directory
+  file:
+    path: /home/{{ user_var }}/nextcloud/data
+    state: directory
+##########################
+# From https://github.com/nextcloud/docker#base-version---apache
+- name: Create a docker-compose.yml file
+  copy:
+    dest: /home/{{ user_var }}/nextcloud/docker-compose.yml
+    content: |
+      version: '2'
+
+      volumes:
+        nextcloud:
+        db:
+
+      services:
+        db:
+          image: mariadb:10.6
+          restart: always
+          command: |
+            --transaction-isolation=READ-COMMITTED
+            --log-bin=binlog --binlog-format=ROW
+          volumes:
+            - db:/var/lib/mysql
+          environment:
+            - MYSQL_ROOT_PASSWORD={{ mysql_password }}
+            - MYSQL_PASSWORD={{ mysql_password }}
+            - MYSQL_DATABASE=nextcloud
+            - MYSQL_USER=nextcloud
+
+        app:
+          image: nextcloud
+          restart: always
+          ports:
+            - "8084:80"
+          hostname: "nextcloud"
+          links:
+            - db
+          volumes:
+            - nextcloud:/var/www/html
+          environment:
+            - MYSQL_PASSWORD={{ mysql_password }}
+            - MYSQL_DATABASE=nextcloud
+            - MYSQL_USER=nextcloud
+            - MYSQL_HOST=db
+            - NEXTCLOUD_ADMIN_USER={{ nextcloud_admin_user }}
+            - NEXTCLOUD_ADMIN_PASSWORD={{ nextloud_admin_password }}
+
+            - NEXTCLOUD_TRUSTED_DOMAINS=localhost
+            - SMTP_HOST={{ smtp_host }}
+            - SMTP_SECURE={{ smtp_secure }}
+            - SMTP_PORT={{ smtp_port }}
+            - SMTP_AUTHTYPE={{ smtp_authtype }}
+            - SMTP_NAME={{ smtp_name }}
+            - SMTP_PASSWORD={{ smtp_password }}
+            - MAIL_FROM_ADDRESS={{ mail_from_address }}
+            - MAIL_DOMAIN={{ mail_domain }}
+########################################
+- name: Run docker-compose
+  become: true
+  community.docker.docker_compose_v2:
+    project_src: /home/{{user_var}}/nextcloud
+    files: docker-compose.yml
+    state: present

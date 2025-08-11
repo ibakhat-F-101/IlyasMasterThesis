@@ -1,0 +1,15 @@
+#!/bin/bash
+
+BACKUP_DIR="/opt/mattermost_backup"
+DATE=$(date +"%Y-%m-%d")
+MATTERMOST_CONFIG_DIR="/home/vagrant/mattermost/volumes/app/mattermost/config/"
+
+
+# Save configuration file Mattermost
+mkdir -p $BACKUP_DIR
+tar -cvf $BACKUP_DIR/mattermost_config-$DATE.tar.gz $MATTERMOST_CONFIG_DIR
+
+docker run --rm --network=mattermost_default -e PGPASSWORD="mmuser_password" postgres:13-alpine pg_dump -h mattermost_postgres_1 -U mmuser -d mattermost > $BACKUP_DIR/backup-$DATE.sql
+
+find $BACKUP_DIR -type f -name "mattermost_config-*.tar.gz" -mtime +7 -delete
+find $BACKUP_DIR -type f -name "backup-*.sql" -mtime +7 -delete

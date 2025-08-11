@@ -1,0 +1,15 @@
+- Attendants: Manuelle, Arnaud, Ilyas, Mendo
+- Pre-meeting
+	- New member
+		- Manuelle
+		- Discuss workings of the project
+	- Vagrant-env removal merge request
+- Meeting
+	- Explained project basics to Manuelle
+	- Shared resources and additional information in discord
+	- Vagrant-env removal merge request reviewed and accepted
+- Post-meeting
+	- Vagrant-env TODO
+		- README still needs to be modified to show that the plugin is no longer needed
+	- Continue individual thesis writing
+	- Manuelle read/watch materials and try launching the project locally

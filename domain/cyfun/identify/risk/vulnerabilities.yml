@@ -1,0 +1,783 @@
+collected_on: '2025-06-02'
+scanner: trivy_container
+unique_cve_count: 90
+vulnerabilities:
+- VulnerabilityID: CVE-2022-3715
+  severity: HIGH
+  title: 'bash: a heap-buffer-overflow in valid_parameter_transform'
+  cwe:
+  - CWE-119
+  - CWE-787
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2022-1304
+  severity: HIGH
+  title: 'e2fsprogs: out-of-bounds read/write via crafted filesystem'
+  cwe:
+  - CWE-125
+  - CWE-787
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-2961
+  severity: HIGH
+  title: 'glibc: Out of bounds write in iconv may lead to remote code execution'
+  cwe:
+  - CWE-787
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-33599
+  severity: HIGH
+  title: 'glibc: stack-based buffer overflow in netgroup cache'
+  cwe:
+  - CWE-121
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2025-4802
+  severity: HIGH
+  title: 'glibc: static setuid binary dlopen may incorrectly search LD_LIBRARY_PATH'
+  cwe:
+  - CWE-426
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-47175
+  severity: HIGH
+  title: 'cups: libppd: remote command injection via attacker controlled data in PPD
+    file'
+  cwe:
+  - CWE-20
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2019-8457
+  severity: CRITICAL
+  title: 'sqlite: heap out-of-bound read in function rtreenode()'
+  cwe:
+  - CWE-125
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-45491
+  severity: CRITICAL
+  title: 'libexpat: Integer Overflow or Wraparound'
+  cwe:
+  - CWE-190
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-45492
+  severity: CRITICAL
+  title: 'libexpat: integer overflow'
+  cwe:
+  - CWE-190
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-52425
+  severity: HIGH
+  title: 'expat: parsing large tokens can trigger a denial of service'
+  cwe:
+  - CWE-400
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-45490
+  severity: HIGH
+  title: 'libexpat: Negative Length Parsing Vulnerability in libexpat'
+  cwe:
+  - CWE-611
+  - CWE-190
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-8176
+  severity: HIGH
+  title: 'libexpat: expat: Improper Restriction of XML Entity Expansion Depth in libexpat'
+  cwe:
+  - CWE-674
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2025-27363
+  severity: HIGH
+  title: 'freetype: OOB write when attempting to parse font subglyph structures related
+    to TrueType GX and variable font files'
+  cwe:
+  - CWE-787
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2021-33560
+  severity: HIGH
+  title: 'libgcrypt: mishandles ElGamal encryption because it lacks exponent blinding
+    to address a side-channel attack against mpi_powm'
+  cwe:
+  - CWE-203
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-29499
+  severity: HIGH
+  title: 'glib: GVariant offset table entry size is not checked in is_normal()'
+  cwe:
+  - CWE-400
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2024-52533
+  severity: HIGH
+  title: 'glib: buffer overflow in set_connect_msg()'
+  cwe:
+  - CWE-120
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2024-0553
+  severity: HIGH
+  title: 'gnutls: incomplete fix for CVE-2023-5981'
+  cwe:
+  - CWE-203
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-0567
+  severity: HIGH
+  title: 'gnutls: rejects certificate chain with distributed trust'
+  cwe:
+  - CWE-347
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-37371
+  severity: CRITICAL
+  title: 'krb5: GSS message token handling'
+  cwe:
+  - CWE-125
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-37370
+  severity: HIGH
+  title: 'krb5: GSS message token handling'
+  cwe:
+  - CWE-345
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-25193
+  severity: HIGH
+  title: 'harfbuzz: allows attackers to trigger O(n^2) growth via consecutive marks'
+  cwe:
+  - CWE-770
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2023-2953
+  severity: HIGH
+  title: 'openldap: null pointer dereference in  ber_memalloc_x  function'
+  cwe:
+  - CWE-476
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-0743
+  severity: HIGH
+  title: 'Mozilla: Crash in NSS TLS method'
+  cwe:
+  - CWE-252
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2024-6609
+  severity: HIGH
+  title: When almost out-of-memory an elliptic curve key which was never alloca ...
+  cwe: []
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2021-33621
+  severity: HIGH
+  title: 'ruby/cgi-gem: HTTP response splitting in CGI'
+  cwe:
+  - CWE-74
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2022-28739
+  severity: HIGH
+  title: 'ruby: Buffer overrun in String-to-Float conversion'
+  cwe:
+  - CWE-125
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2024-41123
+  severity: HIGH
+  title: 'rexml: rubygem-rexml: DoS when parsing an XML having many specific characters
+    such as whitespace character, >] and ]>'
+  cwe:
+  - CWE-400
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2024-41946
+  severity: HIGH
+  title: 'rexml: DoS vulnerability in REXML'
+  cwe:
+  - CWE-400
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2024-49761
+  severity: HIGH
+  title: 'rexml: REXML ReDoS vulnerability'
+  cwe:
+  - CWE-1333
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2025-0306
+  severity: HIGH
+  title: 'ruby: openssl: Ruby Marvin Attack'
+  cwe:
+  - CWE-385
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2025-27219
+  severity: HIGH
+  title: 'CGI: Denial of Service in CGI::Cookie.parse'
+  cwe:
+  - CWE-770
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2025-27220
+  severity: HIGH
+  title: 'CGI: ReDoS in CGI::Util#escapeElement'
+  cwe:
+  - CWE-1333
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2021-36690
+  severity: HIGH
+  title: A segmentation fault can occur in the sqlite3.exe command-line compone ...
+  cwe: []
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-7104
+  severity: HIGH
+  title: 'sqlite: heap-buffer-overflow at sessionfuzz'
+  cwe:
+  - CWE-122
+  - CWE-119
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-50387
+  severity: HIGH
+  title: 'bind9: KeyTrap - Extreme CPU consumption in DNSSEC validator'
+  cwe:
+  - CWE-770
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-50868
+  severity: HIGH
+  title: 'bind9: Preparing an NSEC3 closest encloser proof can exhaust CPU resources'
+  cwe:
+  - CWE-400
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2022-4899
+  severity: HIGH
+  title: 'zstd: mysql: buffer overrun in util.c'
+  cwe:
+  - CWE-400
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-21147
+  severity: HIGH
+  title: 'OpenJDK: RangeCheckElimination array index overflow (8323231)'
+  cwe:
+  - CWE-200
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2025-21587
+  severity: HIGH
+  title: 'openjdk: Better TLS connection support (Oracle CPU 2025-04)'
+  cwe:
+  - CWE-284
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2020-16156
+  severity: HIGH
+  title: 'perl-CPAN: Bypass of verification of signatures in CHECKSUMS files'
+  cwe:
+  - CWE-347
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-31484
+  severity: HIGH
+  title: 'perl: CPAN.pm does not verify TLS certificates when downloading distributions
+    over HTTPS'
+  cwe:
+  - CWE-295
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-47038
+  severity: HIGH
+  title: 'perl: Write past buffer end via illegal user-defined Unicode property'
+  cwe:
+  - CWE-122
+  - CWE-787
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2020-36327
+  severity: HIGH
+  title: 'rubygem-bundler: Dependencies of gems with explicit source may be installed
+    from a different source'
+  cwe: []
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2021-43809
+  severity: HIGH
+  title: 'rubygem-bundler: unexpected code execution in Gemfiles'
+  cwe:
+  - CWE-88
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2024-38428
+  severity: CRITICAL
+  title: 'wget: Misinterpretation of input may lead to improper behavior'
+  cwe:
+  - CWE-436
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-45853
+  severity: CRITICAL
+  title: 'zlib: integer overflow and resultant heap-based buffer overflow in zipOpenNewFileInZip4_6'
+  cwe:
+  - CWE-190
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-45337
+  severity: CRITICAL
+  title: 'golang.org/x/crypto/ssh: Misuse of ServerConfig.PublicKeyCallback may cause
+    authorization bypass in golang.org/x/crypto'
+  cwe: []
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2025-22869
+  severity: HIGH
+  title: 'golang.org/x/crypto/ssh: Denial of Service in the Key Exchange of golang.org/x/crypto/ssh'
+  cwe:
+  - CWE-770
+  images:
+  - jitsi/jicofo:stable-9220-1
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2022-2881
+  severity: HIGH
+  title: 'bind: buffer overread in statistics channel code'
+  cwe:
+  - CWE-125
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-4408
+  severity: HIGH
+  title: 'bind9: Parsing large DNS messages may cause excessive CPU load'
+  cwe:
+  - CWE-407
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-5517
+  severity: HIGH
+  title: "bind9: Querying RFC 1918 reverse zones may cause an assertion failure when\
+    \ \u201Cnxdomain-redirect\u201D is enabled"
+  cwe:
+  - CWE-617
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-5679
+  severity: HIGH
+  title: 'bind9: Enabling both DNS64 and serve-stale may cause an assertion failure
+    during recursive resolution'
+  cwe:
+  - CWE-617
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-6516
+  severity: HIGH
+  title: 'bind9: Specific recursive query patterns may lead to an out-of-memory condition'
+  cwe:
+  - CWE-770
+  - CWE-789
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-11187
+  severity: HIGH
+  title: 'bind: bind9: Many records in the additional section cause CPU exhaustion'
+  cwe:
+  - CWE-405
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-1737
+  severity: HIGH
+  title: 'bind: bind9: BIND''s database will be slow if a very large number of RRs
+    exist at the same nam'
+  cwe:
+  - CWE-770
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-1975
+  severity: HIGH
+  title: 'bind9: bind: SIG(0) can be used to exhaust CPU resources'
+  cwe:
+  - CWE-770
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-4076
+  severity: HIGH
+  title: 'bind: bind9: Assertion failure when serving both stale cache data and authoritative
+    zone content'
+  cwe:
+  - CWE-617
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-23914
+  severity: CRITICAL
+  title: 'curl: HSTS ignored on multiple requests'
+  cwe:
+  - CWE-319
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2022-42916
+  severity: HIGH
+  title: 'curl: HSTS bypass via IDN'
+  cwe:
+  - CWE-319
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2022-43551
+  severity: HIGH
+  title: 'curl: HSTS bypass via IDN'
+  cwe:
+  - CWE-319
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-2398
+  severity: HIGH
+  title: 'curl: HTTP/2 push headers memory-leak'
+  cwe: []
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2022-3534
+  severity: HIGH
+  title: 'Kernel: use-after-free in btf_dump_name_dups in tools/lib/bpf/btf_dump.c'
+  cwe:
+  - CWE-119
+  - CWE-416
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-2603
+  severity: HIGH
+  title: 'libcap: Integer Overflow in _libcap_strdup()'
+  cwe:
+  - CWE-190
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2025-5222
+  severity: HIGH
+  title: 'icu: Stack buffer overflow in the SRBRoot::addTag function'
+  cwe:
+  - CWE-120
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/prosody:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-32002
+  severity: CRITICAL
+  title: 'nodejs: Permissions policies can be bypassed via Module._load'
+  cwe:
+  - CWE-288
+  images:
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2023-30581
+  severity: HIGH
+  title: 'nodejs: mainModule.proto bypass experimental policy mechanism'
+  cwe: []
+  images:
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2023-30589
+  severity: HIGH
+  title: 'nodejs: HTTP Request Smuggling via Empty headers separated by CR'
+  cwe: []
+  images:
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2023-30590
+  severity: HIGH
+  title: 'nodejs: DiffieHellman do not generate keys after setting a private key'
+  cwe: []
+  images:
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2023-32006
+  severity: HIGH
+  title: 'nodejs: Permissions policies can impersonate other modules in using module.constructor.createRequire()'
+  cwe:
+  - CWE-693
+  images:
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2023-32559
+  severity: HIGH
+  title: 'nodejs: Permissions policies can be bypassed via process.binding'
+  cwe:
+  - CWE-269
+  images:
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2024-22019
+  severity: HIGH
+  title: 'nodejs: reading unprocessed HTTP request with unbounded chunk extension
+    allows DoS attacks'
+  cwe:
+  - CWE-404
+  images:
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2024-27983
+  severity: HIGH
+  title: 'nodejs: CONTINUATION frames DoS'
+  cwe:
+  - CWE-362
+  images:
+  - jitsi/jvb:stable-9220-1
+- VulnerabilityID: CVE-2020-22218
+  severity: HIGH
+  title: 'libssh2: use-of-uninitialized-value in _libssh2_transport_read'
+  cwe:
+  - CWE-787
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-24806
+  severity: HIGH
+  title: 'libuv: Improper Domain Lookup that potentially leads to SSRF attacks'
+  cwe:
+  - CWE-918
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2022-2309
+  severity: HIGH
+  title: 'lxml: NULL Pointer Dereference in lxml'
+  cwe:
+  - CWE-476
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-25062
+  severity: HIGH
+  title: 'libxml2: use-after-free in XMLReader'
+  cwe:
+  - CWE-416
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-56171
+  severity: HIGH
+  title: 'libxml2: Use-After-Free in libxml2'
+  cwe:
+  - CWE-416
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2025-24928
+  severity: HIGH
+  title: 'libxml2: Stack-based buffer overflow in xmlSnprintfElements of libxml2'
+  cwe:
+  - CWE-121
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2025-27113
+  severity: HIGH
+  title: 'libxml2: NULL Pointer Dereference in libxml2 xmlPatMatch'
+  cwe:
+  - CWE-476
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2025-32414
+  severity: HIGH
+  title: 'libxml2: Out-of-Bounds Read in libxml2'
+  cwe:
+  - CWE-393
+  - CWE-252
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2025-32415
+  severity: HIGH
+  title: 'libxml2: Out-of-bounds Read in xmlSchemaIDCFillNodeTables'
+  cwe:
+  - CWE-1284
+  - CWE-125
+  images:
+  - jitsi/jvb:stable-9220-1
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2022-28805
+  severity: CRITICAL
+  title: 'lua: heap buffer overread'
+  cwe:
+  - CWE-125
+  images:
+  - jitsi/prosody:stable-9220-1
+- VulnerabilityID: CVE-2021-45985
+  severity: HIGH
+  title: 'lua: heap-based buffer over-read'
+  cwe:
+  - CWE-787
+  images:
+  - jitsi/prosody:stable-9220-1
+- VulnerabilityID: CVE-2022-33099
+  severity: HIGH
+  title: 'lua: heap buffer overflow in luaG_errormsg() in ldebug.c due to uncontrolled
+    recursion in error handling'
+  cwe:
+  - CWE-787
+  images:
+  - jitsi/prosody:stable-9220-1
+- VulnerabilityID: CVE-2024-33452
+  severity: HIGH
+  title: 'lua-nginx-module: HTTP request smuggling via a crafted HEAD request'
+  cwe:
+  - CWE-444
+  images:
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-52355
+  severity: HIGH
+  title: 'libtiff: TIFFRasterScanlineSize64 produce too-big size and could cause OOM'
+  cwe:
+  - CWE-787
+  images:
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2023-52356
+  severity: HIGH
+  title: 'libtiff: Segment fault in libtiff  in TIFFReadRGBATileExt() leading to denial
+    of service'
+  cwe:
+  - CWE-122
+  - CWE-787
+  images:
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-7006
+  severity: HIGH
+  title: 'libtiff: NULL pointer dereference in tif_dirinfo.c'
+  cwe:
+  - CWE-476
+  images:
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2024-55549
+  severity: HIGH
+  title: 'libxslt: Use-After-Free in libxslt (xsltGetInheritedNsList)'
+  cwe:
+  - CWE-416
+  images:
+  - jitsi/web:stable-9220-1
+- VulnerabilityID: CVE-2025-24855
+  severity: HIGH
+  title: 'libxslt: Use-After-Free in libxslt numbers.c'
+  cwe:
+  - CWE-416
+  images:
+  - jitsi/web:stable-9220-1

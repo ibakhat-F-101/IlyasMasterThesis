@@ -1,0 +1,28 @@
+- classification: critical
+  criticality: critical
+  name: Credentials and Access Information
+  value: very_high
+- classification: confidential
+  criticality: high
+  name: Client Data
+  value: very_high
+- classification: confidential
+  criticality: high
+  name: Accounting Documents
+  value: high
+- classification: confidential
+  criticality: medium
+  name: Client Communications
+  value: moderate
+- classification: confidential
+  criticality: medium
+  name: Internal HR Data
+  value: moderate
+- classification: internal
+  criticality: low
+  name: jitsi
+  value: low
+- classification: internal
+  criticality: low
+  name: System Logs
+  value: low

@@ -1,0 +1,54 @@
+- Pre-meeting
+	- to discuss
+		- problem with dotenv ruby gem that vagrant-env uses
+			- https://github.com/hashicorp/vagrant/issues/13550
+		- problem with changes made to the invoiceninja repository that make it no longer work
+		- problem with molecule test that fails because of outdated docker_compose (migrate to docker_compose_v2, but docker_compose_v2 is not found by ansible)
+			- current solution: using shell module to execute docker compose
+		- production server (future)
+		- looking for a jury process
+		- where to put meeting notes
+- Meeting Notes
+	- Take a look at wiki for putting the meeting notes
+		- make sure the wiki is clonable, be carefule not to break it
+	- Vagrant-env can be removed, it is not essential
+	- Using ansible -> should try to use modules as much as possible, avoid shell
+	- Jury selection
+		- Try as soon as possible
+		- As soon as possible means when you have a workable draft
+		- 3 people (including promotor) in the jury
+			- but think about a list of 5 so that you can move on to the next if negative answer
+			- do NOT contact jury too late (e.g. june/july, it will be for next year then)
+			- ideally February/March
+	- For overleaf repository
+		- send message to professor via mattermost
+	- Thesis review
+		- send as soon as possible something that has been pushed as far as you can
+			- not perfect, but as far as you can go yourself
+			- for example not something that hasn't even been spell checked
+		- send smallest possible chapter
+			- to get remarks asap
+		- house rules
+			- professor has limited time to review
+			- inform what the time should be spent on (e.g. which page has been changed)
+			- not last minute
+	- Technical side of the thesis project
+		- collaboration but each student needs to have an individual contribution
+		- not necessarily an issue with no technical component to social engineering subject
+			- but a jury will not be happy
+			- so technical component is necessary (e.g. an implementation)
+		- what to avoid
+			- after the jury listens to you, they should not be able to find a better solution than you on the spot
+			- not just an implementation, but at least some form of scientific advancement
+	- Use gitlab issues plenty even if you work on them right after creating them
+	- 3-servers production
+		- red-black methodology
+		- hardened version should be essentially a private cloud
+	-
+- Post-meeting
+	- To do for the repo
+		- merge fixes into main
+		- add issues
+			- get docker_compose_v2 working instead of shell module in ansible
+			- remove vagrant-env plugin due to its issues
+		- add current contributors & focus

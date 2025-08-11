@@ -1,0 +1,1 @@
+{"virtualbox":{"/janus":{"mount_options":["dmode=775","fmode=600","uid=1000","gid=1000","_netdev"],"guestpath":"/janus","hostpath":"C:/Users/ilyas/OneDrive/Bureau/janus-main","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/ilyas/OneDrive/Bureau/janus-main/domain/user","disabled":false,"__vagrantfile":true}}}

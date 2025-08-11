@@ -1,0 +1,31 @@
+---
+########################################
+# Installation steps here : https://github.com/jgraph/docker-drawio
+########################################
+- name: Create Drawio directory
+  file:
+    path: /home/{{ user_var }}/drawio
+    state: directory
+########################################
+- name: Clone Drawio git repo
+  git:
+    repo: https://github.com/jgraph/docker-drawio.git
+    dest: /home/{{ user_var }}/drawio
+########################################
+- name: Configure docker-compose ports
+  replace:
+    path: /home/{{ user_var }}/drawio/docker-compose.yml
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  loop:
+    - regexp: '8080:8080'
+      replace: '8085:8080'
+    - regexp: '8443:8443'
+      replace: '8446:8443'
+########################################
+- name: Run docker-compose
+  become: true
+  community.docker.docker_compose_v2:
+    project_src: /home/{{user_var}}/drawio
+    files: docker-compose.yml
+    state: present

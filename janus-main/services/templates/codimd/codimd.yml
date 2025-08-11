@@ -1,0 +1,53 @@
+---
+- name: Create a codiMD directory
+  become: true
+  file:
+    path: "/home/{{ user_var }}/codimd"
+    state: directory
+
+- name: Install p7zip-full for backup restoration
+  become: true
+  apt:
+    name: p7zip-full
+    state: present
+
+- name: Create a docker-compose.yml file
+  become: true
+  copy:
+    dest: "/home/{{ user_var }}/codimd/docker-compose.yml"
+    content: |
+      version: "3"
+      services:
+        database:
+          image: postgres:11.6-alpine
+          environment:
+            - POSTGRES_USER={{ postgres_user }}
+            - POSTGRES_PASSWORD={{ postgres_password }}
+            - POSTGRES_DB={{ postgres_db }}
+          volumes:
+            - "database-data:/var/lib/postgresql/data"
+          restart: always
+
+        codimd:
+          image: hackmdio/hackmd:2.4.2
+          environment:
+            - CMD_DB_URL=postgres://codimd:{{ db_url }}
+            - CMD_USECDN=false
+          depends_on:
+            - database
+          ports:
+            - "8086:3000"
+          volumes:
+            - upload-data:/home/hackmd/app/public/uploads
+          restart: always
+
+      volumes:
+        database-data: {}
+        upload-data: {}
+
+- name: Run docker-compose
+  become: true
+  community.docker.docker_compose_v2:
+    project_src: /home/{{user_var}}/codimd
+    files: docker-compose.yml
+    state: present

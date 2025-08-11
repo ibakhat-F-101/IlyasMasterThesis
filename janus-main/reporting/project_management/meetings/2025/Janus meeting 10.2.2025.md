@@ -1,0 +1,24 @@
+- Pre-meeting
+	- to do
+		- check merge request permissions, do we need a runner to make changes?
+			- maintainer permission to merge even if pipeline fails?
+		- updating of focus & current contributors section
+		- discuss everyone's work plans for the project
+		- try running the domain/user all together
+- Meeting Notes
+	- tested running domain/user -> works?
+	- Plans
+		- Ilyas
+			- create green team using AI
+			- fake normal users to try to social engineer & practice
+		- Arnaud
+			- infrastructure 100% secured for CyFun pillar
+			- add services, check everything is secured
+		- Mendo
+			- security awareness training platform for preventing social engineering attacks
+- Post-meeting
+	- Current plans
+		- advance on our thesis
+		- research implementation further
+		- ask questions on development, deployment
+		- check gitlab runner and what needs to be done to be able to merge branches/make changes to the repository

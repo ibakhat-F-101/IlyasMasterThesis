@@ -1,0 +1,36 @@
+---
+stages:
+  - converge-molecule
+  - test-molecule
+  - destroy-molecule
+
+molecule-converge-playbooks:
+  stage: converge-molecule
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
+      changes:
+        - "**/{*[^.]md*,*.[^m]*,*.m,*.m[^d]*,*.md?*,*[^d]}" # this pattern looks to make sure a non-markdown file has changed
+  script: 
+    - cd molecule
+    - molecule destroy
+    - ANSIBLE_VAULT_PASSWORD_FILE=../../../domain/user/user_group_vars/password_vault/password_vault.txt molecule converge
+    - sleep 180
+
+molecule-check-pipeline:
+  stage:  test-molecule
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
+      changes:
+        - "**/{*[^.]md*,*.[^m]*,*.m,*.m[^d]*,*.md?*,*[^d]}" # this pattern looks to make sure a non-markdown file has changed
+  trigger:
+    include: 
+      - local: workflow/analyze/molecule/.molecule-verify-ci.yml
+    strategy: depend
+
+molecule-destroy-pipeline:
+  stage: destroy-molecule
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
+  script: 
+    - cd molecule
+    - molecule destroy

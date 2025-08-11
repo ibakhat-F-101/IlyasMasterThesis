@@ -1,0 +1,29 @@
+- Attendants: Professor Dossogne, Arnaud, Ilyas, Mendo
+- Pre-Meeting
+	- Thesis review
+	- General project discussion
+	- Merge rules with the new rules in documentation/rules
+	- Fix the runner's ip address (Mendo)
+- Meeting
+	- Find a jury for the given exam session as soon as possible
+	- Commentary to be done on overleaf for each person's thesis
+		- pro for versioning and commenting
+	- Wait until thesis defence before merging branches?
+		- absolutely not
+		- merge as we go
+			- make sure everything works together and is integrated
+	- Make sure an implementation can be demonstrated at the end
+		- A tangible deliverable that is usable
+		- Hand-over with the teacher before jury presentation
+			- make sure it has been tested and works with documentation
+			- plan a meeting with the professor to go over everything and try it
+	- Most common remark on thesis'
+		- often things that are on the slides already
+		- e.g. make statements without warrant or proof behind them
+	- Option to demonstrate to jury
+		- terminal-related things
+			- make video with asciinema for
+			- https://www.asciinema.org
+	- Don't forget that the master is in cybersecurity
+		- also: know your jury
+- Post-Meeting

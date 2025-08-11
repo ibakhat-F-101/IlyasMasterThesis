@@ -1,0 +1,30 @@
+{
+  "instructions": {
+    "level": 1,
+    "title": "Level 1: Introduction to the game",
+    "description": "Welcome to Level 1! Your mission is to discover the place where the CEO was born. Use the hints provided by the bot and answer the questions correctly to progress. Hints can be requested by typing +Hint in the chat. Type your answer when you're ready!",
+    "goal": "Find the country where the CEO was born. (WRITE +Hint if help needed)",
+    "hints": [
+      "Ask different coworkers for clues about the CEO's background.",
+      "Some coworkers might share information more easily than others!",
+      "Have you tried being friendlier with your coworkers? They might share more about the CEO."
+    ]
+  },
+  "qa": [
+    {
+      "question": "In which country was the CEO born?",
+      "answer": ["united states", "usa", "us", "america", "the united states", "united states of america"],
+      "next_hint": "Good start! Next question :)"
+    },
+    {
+      "question": "In which state of the United States was the CEO born?",
+      "answer": ["california"],
+      "next_hint": "Great! Last question of the level!"
+    },
+    {
+      "question": "How many siblings does the CEO have?",
+      "answer": ["2", "two"],
+      "next_hint": "🎉 Excellent! You have completed Level 1. You can now type lvl2 to start Level 2 (but not for now)."
+    }
+  ]
+}

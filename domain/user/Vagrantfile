@@ -1,0 +1,107 @@
+VAGRANT_CONFIG_VERSION = "2"
+ANSIBLE_COMPATIBILITY_MODE = "2.0"
+VM_NAME_VB = "user_domain"
+VM_HOSTNAME = "vagrant"
+STATIC_IP = "10.10.10.12"
+PATH_TO_PASSWORD_VAULT = "/janus/domain/user/user_group_vars/password_vault/password_vault.txt"
+BOX_BASE  = "antitrust-ageless-custard-unreached/janus"
+JANUS_USER_MEMORY = 4096
+JANUS_USER_CPUS   = 4
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  Set USE_CYFUN=true vagrant up  ➜  run CyFun playbooks
+#  Set MATTERMOST_NPC=true vagrant up  ➜  use mattermost_bot.yml instead of mattermost.yml
+# ─────────────────────────────────────────────────────────────────────────────
+ENABLE_CYFUN = ENV['USE_CYFUN'] == 'true'
+ENABLE_MATTERMOST_NPC = ENV['MATTERMOST_NPC'] == 'true'
+
+# Function to provision services with Ansible
+def provision_with_ansible(user, service)
+  # Choose playbook dynamically for Mattermost
+  playbook_file = (service == "mattermost" && ENABLE_MATTERMOST_NPC) ? "#{service}_bot.yml" : "#{service}.yml"
+  playbook_path = "/janus/domain/user/#{service}/#{playbook_file}"
+
+  user.vm.provision "ansible_local" do |ans|
+    ans.compatibility_mode = ANSIBLE_COMPATIBILITY_MODE
+    ans.playbook          = playbook_path
+    ans.inventory_path    = "/janus/domain/user/inventory/inventory.ini"
+    ans.verbose           = "v"
+    ans.vault_password_file = PATH_TO_PASSWORD_VAULT
+  end
+end
+
+Vagrant.configure(VAGRANT_CONFIG_VERSION) do |config|
+  config.vm.define VM_NAME_VB do |user|
+    # Basic VM config
+    user.vm.box      = BOX_BASE
+    user.vm.hostname = VM_HOSTNAME
+    user.vm.post_up_message = File.read("post_up_message.txt")
+
+    # Port forwarding – access services from host
+    user.vm.network "forwarded_port", guest: 8081, host: 8081  # Mattermost
+    user.vm.network "forwarded_port", guest: 8082, host: 8082  # SyncThing
+    user.vm.network "forwarded_port", guest: 8443, host: 8443  # Jitsi
+    user.vm.network "forwarded_port", guest: 8090, host: 8090  # Jitsi HTTP
+    user.vm.network "forwarded_port", guest: 8084, host: 8084  # Nextcloud
+    user.vm.network "forwarded_port", guest: 8444, host: 8444  # Bitwarden
+    user.vm.network "forwarded_port", guest: 8446, host: 8446  # Draw.io
+    user.vm.network "forwarded_port", guest: 8085, host: 8085  # Draw.io HTTP
+    user.vm.network "forwarded_port", guest: 8086, host: 8086  # CodiMD
+    user.vm.network "forwarded_port", guest: 8087, host: 8087  # Invoice Ninja
+    user.vm.network "forwarded_port", guest: 8088, host: 8088  # Logseq
+    user.vm.network "forwarded_port", guest: 8441, host: 8441, protocol: "tcp" # Calls TCP
+    user.vm.network "forwarded_port", guest: 8441, host: 8441, protocol: "udp" # Calls UDP
+
+    # Sync the full janus project into the VM
+    janus_directory = File.expand_path("../..", Dir.pwd)
+    user.vm.synced_folder janus_directory, "/janus",
+      mount_options: ["dmode=775", "fmode=600"]
+
+    # VirtualBox specific config
+    user.vm.provider "virtualbox" do |vb|
+      vb.gui   = false
+      vb.name  = VM_NAME_VB
+      vb.memory = JANUS_USER_MEMORY
+      vb.cpus   = JANUS_USER_CPUS
+    end
+
+    # Base provisioning (common setup)
+    user.vm.provision "ansible_local" do |ans|
+      ans.compatibility_mode = ANSIBLE_COMPATIBILITY_MODE
+      ans.galaxy_role_file   = '/janus/domain/user/common/requirements.yml'
+      ans.inventory_path     = "/janus/domain/user/inventory/inventory.ini"
+      ans.playbook           = "/janus/domain/user/common/common.yml"
+      ans.verbose            = "v"
+    end
+
+    # Provision all main services
+    services_to_provision = ["mattermost"]
+    services_to_provision.each { |service| provision_with_ansible(user, service) }
+
+    
+    # ────────────────────────────────
+    #  CYFUN PLAYBOOKS (optional)
+    # ────────────────────────────────
+
+    if ENABLE_CYFUN
+      cyfun_playbooks = [
+        "identify/assets/scripts/collect-assets.yml",
+        "identify/software/scripts/collect-software.yml",
+        "identify/inventory/scripts/collect_all_inventory.yml",
+        "identify/inventory/scripts/prioritize_inventory.yml",
+        "identify/risk/scripts/collect_vulnerabilities.yml",
+        "identify/policies/scripts/legal_compliance.yml"
+      ]
+
+      cyfun_playbooks.each do |playbook_path|
+        user.vm.provision "ansible_local" do |ans|
+          ans.compatibility_mode = "2.0"
+          ans.playbook        = "/janus/domain/cyfun/#{playbook_path}"
+          ans.inventory_path  = "/janus/domain/user/inventory/inventory.ini"
+          ans.verbose         = "v"
+          ans.limit           = "all"
+        end
+      end
+    end
+  end
+end

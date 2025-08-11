@@ -1,0 +1,43 @@
+---
+####################
+## Structure of 'vault.yml':
+####################
+
+# Common for all services
+vault_smtp_password: "SOMETHING"
+# The only change is that there is 2 '$' instead of 1 because of the way ansible handles variables for the docker-compose file
+vault_smtp_password_dockerfile: "SOMETHING"
+
+### USER
+# Bitwarden
+# Cleartext:  "SOMETHING"
+vault_user_password_bitwarden: "SOMETHING"
+
+# Invoice Ninja
+vault_in_password_invoice_ninja: "SOMETHING"
+vault_db_password_invoice_ninja: "SOMETHING"
+vault_mysql_root_password_invoice_ninja: "SOMETHING"
+
+# Jitsi Meet
+## /
+
+# Mattermost (+ Focalboard)
+## /
+
+# Nextcloud
+vault_mysql_password_nextcloud: "SOMETHING"
+vault_nextcloud_admin_password_nextcloud: "SOMETHING"
+
+# Syncthing
+# Cleartext: "SOMETHING"
+vault_syncthing_admin_password: "SOMETHING"
+
+# Drawio
+## /
+
+# codiMD
+vault_postgres_password_codimd: "SOMETHING"
+
+# YOURLS
+vault_db_password_yourls: "SOMETHING"
+vault_dashboard_password_yourls: "SOMETHING"

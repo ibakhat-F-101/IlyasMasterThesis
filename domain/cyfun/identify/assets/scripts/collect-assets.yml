@@ -1,0 +1,34 @@
+---
+- name: Collect system facts and write to asset inventory
+  hosts: user_domain
+  gather_facts: yes
+  remote_user: "{{ user_var }}"
+  connection: local
+
+  vars_files:
+    - ../../../../user/local_or_remote.yml
+
+  tasks:
+    - name: Set asset facts
+      set_fact:
+        asset_info:
+          asset_type: infrastructure
+          description: "Auto-collected infrastructure asset for CyFun ID.AM-1 compliance"
+          collected_on: "{{ ansible_date_time.date }}"
+          assets:
+            - id: "{{ ansible_hostname }}"
+              name: "{{ ansible_hostname }}"
+              type: "vm"
+              os: "{{ ansible_distribution }} {{ ansible_distribution_version }}"
+              ip: "{{ ansible_default_ipv4.address }}"
+              cpu: "{{ ansible_processor_cores }} cores"
+              ram: "{{ ansible_memtotal_mb }} MB"
+
+    - name: Write infrastructure asset inventory to file
+      copy:
+        content: "{{ asset_info | to_nice_yaml(indent=2) }}"
+        dest: "/janus/domain/cyfun/identify/assets/output/assets.yml"
+
+    - name: Print confirmation message
+      debug:
+        msg: "✅ collect-assets.yml executed successfully for CyFun ID.AM-1"

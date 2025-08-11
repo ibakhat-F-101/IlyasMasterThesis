@@ -1,0 +1,10 @@
+- Attendants: Ilyas, Mendo
+- Pre-meeting
+	- To discuss
+		- Docker compose upgrade to v2
+			- New requirement on community.docker ansible collection
+			- Keep in mind for later production deployment to check if relevant
+- Meeting
+	- Short discussion on project docker upgrade
+- Post-meeting
+	- Continue individual work

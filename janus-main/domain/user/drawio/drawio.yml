@@ -1,0 +1,15 @@
+---
+- name: Configure Draw.io
+  hosts: 10.10.10.12 moleculeTest
+  gather_facts: false
+  connection: local
+  remote_user: "{{ user_var }}"
+
+  vars_files:
+    - ../user_group_vars/vault.yml
+    - ../local_or_remote.yml  # for the variable 'user_var'
+
+  vars:
+    IP: 127.0.0.1
+  tasks:
+    - include_tasks: /janus/services/templates/drawio/drawio.yml

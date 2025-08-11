@@ -1,0 +1,10 @@
+- Attendants: Ilyas, Arnaud, Mendo
+- Pre-meeting
+	- No specific plans for this meeting
+- Meeting
+	- State of the art discussion
+	- Recap thesis deadlines
+		- thesis submission on Mel
+		- more
+	- Discussion about the organisation of the state of the art section
+- Post-meeting

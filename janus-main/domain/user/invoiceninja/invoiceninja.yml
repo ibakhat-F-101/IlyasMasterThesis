@@ -1,0 +1,62 @@
+---
+- name: Configure Invoice Ninja
+  hosts: 10.10.10.12 moleculeTest
+  gather_facts: false
+  remote_user: "{{ user_var }}"
+  connection: local
+
+  vars_files:
+    - ../local_or_remote.yml
+    - ../user_group_vars/vault.yml
+    - ../user_group_vars/usernames.yml
+
+  vars:
+    IP: 127.0.0.1
+    PORT: 8087
+    ########################################
+    # env
+    # App
+    # app_key: will be defined later in the docker container
+    # TODO: change to false before prod
+    # app_key: will be defined later in the docker container
+    # TODO: change to false before prod
+    # TODO: change to true before prod
+    ########################################
+    app_url: "http://localhost:8087"
+    app_debug: true
+    require_https: false
+    ########################################
+    # Database
+    # This should be the same password as 'mysql_password' !!!!
+    ########################################
+    db_host: mysql
+    db_port: 3306
+    db_database: ninja
+    db_username: ninja
+    db_password: "{{ vault_db_password_invoice_ninja }}"
+    ########################################
+    # Initial user
+    ########################################
+    in_user_email: "{{ username_in_user_email }}"
+    in_password: "{{ vault_in_password_invoice_ninja }}"
+    ########################################
+    # Mail
+    ########################################
+    mail_mailer: smtp
+    mail_host: mail.gmx.com
+    mail_port: 587
+    mail_username: Ild8NMJXewJewfZ7@gmx.fr
+    mail_password: "{{ vault_smtp_password }}"
+    mail_encryption: tls
+    mail_from_address: Ild8NMJXewJewfZ7@gmx.fr
+    mail_from_name: Micropole Admin cyber internship
+    ########################################
+    # MySql
+    # This should be the same password as 'db_password' !!!!
+    ########################################
+    mysql_root_password: "{{ vault_mysql_root_password_invoice_ninja }}"
+    mysql_user: ninja
+    mysql_password: "{{ vault_db_password_invoice_ninja }}"
+    mysql_database: ninja
+  tasks:
+    - include_tasks: /janus/services/templates/invoiceninja/invoiceninja.yml

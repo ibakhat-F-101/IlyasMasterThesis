@@ -1,0 +1,8 @@
+- Attendants: Arnaud, Ilyas, Mendo, Professor Dossogne
+- Pre-Meeting
+	- Thesis review
+	- General project discussion
+	- Move all wiki entries to the documentation section in the repo?
+- Meeting
+	- Miscommunication on meeting date & time -> postponed
+- Post-Meeting

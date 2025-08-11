@@ -1,0 +1,96 @@
+---
+- name: Prepare
+  hosts: moleculeTest
+  gather_facts: false
+
+  vars:
+    directories:
+      mattermost: mattermost.yml
+      bitwarden: bitwarden.yml
+      syncthing: syncthing.yml
+      codimd: codimd.yml
+      drawio: drawio.yml
+      invoiceninja: invoiceninja.yml
+      jitsi: jitsi.yml
+      logseq: logseq.yml
+      nextcloud: nextcloud.yml
+
+  tasks:
+    - name: Configure eth1 interface
+      become: true
+      ansible.builtin.blockinfile:
+        path: /etc/network/interfaces
+        block: |
+          {% for ip in range(range_ip_start|int, range_ip_end|int + 1) %}
+          iface eth1 inet static
+          address 10.10.10.{{ ip }}
+          netmask 255.255.255.0
+          {% endfor %}
+      vars:
+        range_ip_start: 13
+        range_ip_end: 21
+    ########################################
+    - name: Restart networking service
+      become: true
+      service:
+        name: networking
+        state: restarted
+    ########################################
+    - name: Restart Docker service
+      become: true
+      service:
+        name: docker
+        state: restarted
+
+    - name: Create temporary directory for modified playbooks
+      delegate_to: localhost
+      file:
+        state: directory
+        path: "playbooks/{{ item.key }}"
+      register: temp_playbook_dir
+      loop: "{{ directories | dict2items }}"
+
+    - name: Verify playbooks exist
+      delegate_to: localhost
+      ansible.builtin.stat:
+        path: "playbooks/{{ item.key }}/{{ item.value }}"
+      loop: "{{ directories | dict2items }}"
+      register: playbook_stat_results
+
+    - name: Copy remote user variables to playbook
+      delegate_to: localhost
+      copy:
+        force: true
+        src: ../../../domain/user/local_or_remote.yml
+        dest: playbooks
+
+    - name: Copy vault variables to playbook
+      delegate_to: localhost
+      copy:
+        force: true
+        src: ../../../domain/user/user_group_vars
+        dest: playbooks
+
+    - name: Copy playbooks to temporary directory
+      delegate_to: localhost
+      copy:
+        force: true
+        src: "../../../domain/user/{{ item.key }}" #/{{ item.value }}
+        dest: "playbooks/" #{{ item.key }}
+      loop: "{{ directories | dict2items }}"
+
+    - name: Replace directories in playbooks
+      delegate_to: localhost
+      replace:
+        path: "playbooks/{{ item.key }}/{{ item.value }}"
+        regexp: ' - include_tasks: /janus/services/templates'
+        replace: ' - include_tasks: ../../../../../services/templates'
+      loop: "{{ directories | dict2items }}"
+
+    - name: Replace directories in playbooks
+      delegate_to: localhost
+      replace:
+        path: "playbooks/{{ item.key }}/{{ item.value }}"
+        regexp: ' connection: local'
+        replace: ' #connection: local'
+      loop: "{{ directories | dict2items }}"

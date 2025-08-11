@@ -1,0 +1,16 @@
+---
+- name: Configure Syncthing
+  hosts: 10.10.10.12 moleculeTest
+  gather_facts: false
+  remote_user: "{{user_var}}"
+  connection: local
+
+  vars_files:
+    - ../local_or_remote.yml
+
+  vars:
+    IP: 127.0.0.1
+    PORT: 8082
+
+  tasks:
+    - include_tasks: /janus/services/templates/syncthing/syncthing.yml

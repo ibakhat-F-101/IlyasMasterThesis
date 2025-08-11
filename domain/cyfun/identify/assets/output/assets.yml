@@ -1,0 +1,11 @@
+asset_type: infrastructure
+assets:
+- cpu: 4 cores
+  id: vagrant
+  ip: 10.0.2.15
+  name: vagrant
+  os: Debian 12.6
+  ram: 3914 MB
+  type: vm
+collected_on: '2025-06-02'
+description: Auto-collected infrastructure asset for CyFun ID.AM-1 compliance

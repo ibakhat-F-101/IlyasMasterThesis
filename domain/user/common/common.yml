@@ -1,0 +1,51 @@
+---
+- name: Common tasks
+  hosts: 10.10.10.12
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Install bcrypt
+      become: true
+      ansible.builtin.apt:
+        name: python3-bcrypt
+        state: present
+
+    - name: Install passlib
+      become: true
+      ansible.builtin.apt:
+        name: python3-passlib
+        state: present
+
+    - name: Randomize password
+      command: 'ansible-playbook /janus/domain/user/user_group_vars/secure_vault.yml'
+      retries: 3
+      delay: 3
+      register: result
+      until: result.rc == 0
+
+    - name: Configure eth1 interface
+      become: true
+      ansible.builtin.blockinfile:
+        path: /etc/network/interfaces
+        block: |
+          {% for ip in range(range_ip_start|int, range_ip_end|int + 1) %}
+          iface eth1 inet static
+          address 10.10.10.{{ ip }}
+          netmask 255.255.255.0
+          {% endfor %}
+      vars:
+        range_ip_start: 13
+        range_ip_end: 21
+    ########################################
+    - name: Restart networking service
+      become: true
+      service:
+        name: networking
+        state: restarted
+    ########################################
+    - name: Restart Docker service
+      become: true
+      service:
+        name: docker
+        state: restarted

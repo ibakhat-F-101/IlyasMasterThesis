@@ -1,0 +1,27 @@
+stages:
+  - dast-build
+  
+run-main-script:
+  stage: dast-build
+  script:
+    - cd $CI_PROJECT_DIR/workflow/scripts/
+    - ./deleteVM.sh
+    - ./analyzeDomains.sh $CI_PROJECT_DIR
+    - cd ~/
+    - rm -rf $CI_PROJECT_DIR/zap_reports
+    - cp -r zap_reports $CI_PROJECT_DIR/
+    - cd $CI_PROJECT_DIR/workflow/scripts/
+    - ./deleteVM.sh
+
+  artifacts:
+    name: "zap_reports"
+    paths:
+      - zap_reports/
+
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: always
+      allow_failure: true
+      changes:
+        - "**/{*[^.]md*,*.[^m]*,*.m,*.m[^d]*,*.md?*,*[^d]}" # this pattern looks to make sure a non-markdown file has changed
+
