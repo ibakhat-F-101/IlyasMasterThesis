@@ -1,8 +1,4 @@
-# Rules : [HERE](reporting/project_management/Rules-for-Janus-project.md)
-
-# Table of content
-
-[[_TOC_]]
+# This git is a copy of the private GIT Janus And it doesn't reflect the final state of Janus, but of my completed personal project.
 
 # Purpose of this work
 The aim of this work is to design, implement, and validate a framework that:
