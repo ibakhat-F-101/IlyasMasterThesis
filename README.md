@@ -16,7 +16,7 @@ This academic adaptation serves as both:
 - A methodological contribution in evaluating and enhancing social engineering resilience through AI-driven human simulation.
 
 ## Project Structure
-
+```
 janus/  
 └── domain/  
     └── user/                       # Main environment to launch (Vagrant)  
@@ -34,7 +34,7 @@ janus/
         │       ├── Data/            # Data files used by agents  
         │       └── levels/          # Level content files  
         └── mattermost_bot.yml  
-
+```
 
 
 # Project lead & copyright Jérôme Dossogne all rights reserved
