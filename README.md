@@ -1,4 +1,5 @@
 # This git is a copy of the private GIT Janus And it doesn't reflect the final state of Janus, but of my completed personal project.
+# The VagrantFile Only contain Mattermost to test the project 
 
 # Purpose of this work
 The aim of this work is to design, implement, and validate a framework that:

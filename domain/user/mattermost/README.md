@@ -52,14 +52,9 @@ cd janus/domain/user
 * On **Linux/macOS**:
 
 ```sh
-vagrant destroy --force && vagrant box update && MATTERMOST_NPC="true"
+vagrant destroy --force && vagrant box update && MATTERMOST_NPC="true" && Vagrant Up
 ```
 
-* On **Windows** (CMD):
-
-```cmd
-set "MATTERMOST_BOT=true" && vagrant destroy --force && vagrant box update && vagrant up
-```
 
 * On **Windows** (PowerShell):
 
