@@ -16,24 +16,25 @@ This academic adaptation serves as both:
 - A methodological contribution in evaluating and enhancing social engineering resilience through AI-driven human simulation.
 
 ## Project Structure
-janus/
-└── domain/
-└── user/
-├── Vagrantfile
-├── mattermost/
-│ ├── mattermost_bot/
-│ │ ├── agents.py
-│ │ ├── behaviors.py
-│ │ ├── bot.py
-│ │ ├── config.py
-│ │ ├── levels.py
-│ │ ├── profiles.json
-│ │ ├── roles.json
-│ │ ├── utils.py
-│ │ ├── Data/
-│ │ └── levels/
-│ └── (mattermost_bot.yml)
-└── (other user domain resources)
+
+janus/  
+└── domain/  
+    └── user/                       # Main environment to launch (Vagrant)  
+        ├── Vagrantfile  
+        ├── mattermost/  
+        │   └── mattermost_bot/  
+        │       ├── agents.py        # CrewAI agent definitions and LLM wrapper  
+        │       ├── behaviors.py     # Role-based behavioral probabilities  
+        │       ├── bot.py           # Response personalization logic  
+        │       ├── config.py        # Global configuration variables  
+        │       ├── levels.py        # Game/Training levels logic  
+        │       ├── profiles.json    # User profiles for agents  
+        │       ├── roles.json       # Role definitions and backstories  
+        │       ├── utils.py         # Utility functions (passwords, profile loading)  
+        │       ├── Data/            # Data files used by agents  
+        │       └── levels/          # Level content files  
+        └── mattermost_bot.yml  
+
 
 
 # Project lead & copyright Jérôme Dossogne all rights reserved
