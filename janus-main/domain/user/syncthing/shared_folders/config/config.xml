@@ -54,7 +54,7 @@
     <gui enabled="true" tls="false" debugging="false">
         <address>127.0.0.1:8384</address>
         <user>micropole_admin_944o4vj2</user>
-        <password>$2a$10$5LzL9lve3mGG9lILFlbeweurnrx.g1ViXVWMNDcPiOJq5q5SJTSw.</password>
+        <password>$2a$10$PfiI/0052F2HpopOzbA.y.tD7H0Kb3v.8PY6kwspthvHyjputy.EK</password>
         <apikey>6XavbMr2FX6QnsiTuG3tXyqJN4C5uj4e</apikey>
         <theme>default</theme>
     </gui>

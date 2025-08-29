@@ -1,6 +1,6 @@
 ---
 - name: Configure Draw.io
-  hosts: 10.10.10.12 moleculeTest
+  hosts: 127.0.0.1 moleculeTest
   gather_facts: false
   connection: local
   remote_user: "{{ user_var }}"

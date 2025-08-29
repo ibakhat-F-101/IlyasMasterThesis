@@ -2,11 +2,11 @@ VAGRANT_CONFIG_VERSION = "2"
 ANSIBLE_COMPATIBILITY_MODE = "2.0"
 VM_NAME_VB = "user_domain"
 VM_HOSTNAME = "vagrant"
-STATIC_IP = "10.10.10.12"
 PATH_TO_PASSWORD_VAULT = "/janus/domain/user/user_group_vars/password_vault/password_vault.txt"
 BOX_BASE  = "antitrust-ageless-custard-unreached/janus"
 JANUS_USER_MEMORY = 4096
 JANUS_USER_CPUS   = 4
+ANS_INVENTORY_PATH = "/janus/domain/user/inventory/inventory.ini"
 
 # ─────────────────────────────────────────────────────────────────────────────
 #  Set USE_CYFUN=true vagrant up  ➜  run CyFun playbooks
@@ -24,7 +24,7 @@ def provision_with_ansible(user, service)
   user.vm.provision "ansible_local" do |ans|
     ans.compatibility_mode = ANSIBLE_COMPATIBILITY_MODE
     ans.playbook          = playbook_path
-    ans.inventory_path    = "/janus/domain/user/inventory/inventory.ini"
+    ans.inventory_path    = ANS_INVENTORY_PATH
     ans.verbose           = "v"
     ans.vault_password_file = PATH_TO_PASSWORD_VAULT
   end
@@ -69,13 +69,14 @@ Vagrant.configure(VAGRANT_CONFIG_VERSION) do |config|
     user.vm.provision "ansible_local" do |ans|
       ans.compatibility_mode = ANSIBLE_COMPATIBILITY_MODE
       ans.galaxy_role_file   = '/janus/domain/user/common/requirements.yml'
-      ans.inventory_path     = "/janus/domain/user/inventory/inventory.ini"
+      ans.inventory_path     = ANS_INVENTORY_PATH
       ans.playbook           = "/janus/domain/user/common/common.yml"
       ans.verbose            = "v"
     end
 
     # Provision all main services
-    services_to_provision = ["mattermost"]
+    services_to_provision = ["bitwarden", "mattermost", "invoiceninja", "jitsi",
+                             "nextcloud", "syncthing", "codimd", "drawio", "logseq"]
     services_to_provision.each { |service| provision_with_ansible(user, service) }
 
     
@@ -95,9 +96,9 @@ Vagrant.configure(VAGRANT_CONFIG_VERSION) do |config|
 
       cyfun_playbooks.each do |playbook_path|
         user.vm.provision "ansible_local" do |ans|
-          ans.compatibility_mode = "2.0"
+          ans.compatibility_mode = ANSIBLE_COMPATIBILITY_MODE
           ans.playbook        = "/janus/domain/cyfun/#{playbook_path}"
-          ans.inventory_path  = "/janus/domain/user/inventory/inventory.ini"
+          ans.inventory_path  = ANS_INVENTORY_PATH
           ans.verbose         = "v"
           ans.limit           = "all"
         end

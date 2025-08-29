@@ -1,0 +1,1 @@
+The common.yml file is utilized by the Vagrantfile to define tasks common to all services within the project. These tasks typically include actions such as IP addressing, Docker restarts, and more.

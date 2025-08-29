@@ -1,0 +1,143 @@
+-
+	- Github Link
+		- https://github.com/ibakhat-F-101/IlyasMasterThesis
+	- How to launch the project?
+		- git clone https://gitlab.com/jdosec/janus
+			- cd domain/user
+				- Linux
+					- ```bash
+					  vagrant destroy --force && vagrant box update && MATTERMOST_NPC="true" vagrant up```
+				- Windows (PowerShell)
+					- ```bash
+					   vagrant destroy --force; vagrant box update; $env:MATTERMOST_NPC="true"; vagrant up```
+				- After the project is launched
+					- Go to the connexion page of Mattermost.
+						- Static Account : (Todo : Make this account Randomized and easy to copy/paste)
+							- Admin
+							- AdminPassword123
+	- Potential Error
+		- ```bash
+		  docker read: operation timed out
+		  ```
+		- Fix : Restart the project using the linux or windows powershell command.
+	- ## Books & References
+		- Author : Christopher Hadnagy
+			- Social engineering : https://amzn.eu/d/3jo5ezL
+		- Author : Robert Cialdini
+			- Yes! 50 Scientifically proven ways to be persuasive : https://amzn.eu/d/0YuCIz8
+		- Author : Nigel Poulton
+			- Docker Deep Dive ( 2024 was used but now 2025 is available. )
+		- Vagrant for beginners (Playlist) :
+			- {{video https://www.youtube.com/watch?v=czMCO1w-xQU&list=PLhW3qG5bs-L9S272lwi9encQOL9nMOnRa}}
+	- ## Files Overview
+		- config.py
+			- Logging setup (console + file).
+			- Loads environment variables: MATTERMOST_URL, WEBSOCKET_URL, DEEPSEEK_API_KEY.
+			- Provides admin credentials.
+			- → Used by: api.py, bot.py, levels.py, main.py, utils.py.
+		- api.py
+			- REST API wrapper for Mattermost.
+			- Functions: create_account, authenticate_admin, create_team, add_user_to_team, create_dm_channel, login, get_direct_channels.
+			- → Used by: main.py, levels.py, bot.py.
+		- utils.py
+			- Helper functions for profiles and roles.
+			- Functions: generate_password, assign_personality_traits, load_profiles.
+			- Files used:
+				- data/profiles.json → user profiles
+				- data/roles.json → roles and backstories
+			- → Used by: agents.py, main.py.
+		- behaviors.py
+			- Defines roles_behaviors, contradictory_pairs.
+			- Validity and probability calculations for traits.
+			- → Used by: utils.py.
+		- agents.py
+			- Builds CrewAI agents with LiteLLMWrapper (DeepSeek).
+			- Creates agent_map from profiles in utils.
+			- Functions: get_agent_for_username.
+			- → Used by: bot.py, Tools.py.
+		- Tools.py
+			- Custom CrewAI tool.
+			- AskQuestionToCoworkerTool: agent-to-agent Q&A.
+			- → Uses: agents.agent_map.
+		- bot.py
+			- Auto-reply bot for Mattermost.
+			- Features:
+				- WebSocket listening.
+				- Auto-replies via CrewAI.
+				- Avatar assignment (assigned_images.json).
+			- → Used by: main.py.
+		- levels.py
+			- Challenge/game manager bot.
+			- Features:
+				- Creates "Levels Manager" account.
+				- DM with admin.
+				- Loads challenge files.
+			- Files used:
+				- levels/1.json → level instructions, hints, Q&A
+			- → Used by: main.py.
+		- main.py
+			- Orchestrator and entrypoint.
+			- Workflow:
+				- 1. Wait for Mattermost.
+				- 2. Create/admin login.
+				- 3. Create team and add admin.
+				- 4. Load profiles (utils).
+				- 5. Create users, start auto-reply bots.
+				- 6. Start Levels Manager (levels).
+				- Keeps process alive.
+		- mattermost_bot.yml
+			- Deployment configuration (Vagrant/Docker/Ansible).
+			- Used for container setup and automation.
+			  
+			  ---
+	- ## Data Files
+		- data/profiles.json
+			- Defines default users (username, email, password, avatar).
+		- data/roles.json
+			- Defines roles (CEO, CTO, Security Analyst, etc.).
+		- levels/1.json
+			- Level definition for challenge bot:
+				- Instructions, goal, hints, Q&A.
+	- # Execution Graph
+		- main.py (entrypoint)
+			- uses → config.py
+			- uses → api.py
+				- depends on → config.py
+			- uses → utils.py
+				- uses → behaviors.py
+				- reads → data/profiles.json
+				- reads → data/roles.json
+			- uses → agents.py
+				- depends on → utils.py
+				- depends on → config.py
+			- uses → bot.py
+				- uses → agents.py
+				- uses → api.py
+				- depends on → config.py
+				- writes → assigned_images.json
+			- uses → levels.py
+				- uses → api.py
+				- uses → utils.py
+				- depends on → config.py
+				- reads → levels/1.json
+			- deployment → mattermost_bot.yml
+	- ## Future Work
+		- Technical improvements
+			- Integrate additional local lightweight LLMs  (e.g., Mistral-7B, Grok) to reduce cloud dependency.
+			- Explore a hybrid local/cloud inference engine to balance performance and cost.
+			- Follow the evolution of LLMs.
+		- Deployment and scalability
+			- Optimize Docker/Vagrant infrastructure for constrained environments (universities, SMEs).
+			- Provide more modular Ansible playbooks for rapid replication and testing.
+		- Simulation realism
+			- Extend backstories and behaviors for roles (adding new departments and contexts).
+			- Enrich the scenario base with more social engineering attack types (deepfake, vishing, spear phishing).
+			- Randomize names and attribute a probability of ethnicity depending on the chosen name to enhance demographic diversity and realism.
+		- Training and evaluation
+			- Integrate pedagogical metrics to measure learning outcomes and resilience.
+			- Investigate the impact of gamification and humor on knowledge retention.
+		- Security and ethics
+			- Formalize threats specific to LLMs (data leakage, prompt injection, model manipulation).
+			- Evaluate compliance with regulatory frameworks (e.g., GDPR, ISO 27001).
+		- Additional application
+			- The platform can also be leveraged in the context of **cyber deception**, simulating decoy employees or misleading attacker interactions to study adversarial behavior.

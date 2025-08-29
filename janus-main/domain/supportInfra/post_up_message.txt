@@ -1,0 +1,22 @@
+#############################################
+🚀 Janus Services Deployment Report 🚀
+#############################################
+
+🌐 Janus SupportINFRA is UP and RUNNING 🌐
+
+🌍 Access Services via Web:
+          
+   💌 Mattermost + Focalboard:  https://mattermost.micropole.com  
+🔁 SyncThing:                https://syncthing.micropole.com           
+📞 Jitsi Meet:               https://jitsi.micropole.com
+📂 Nextcloud:                https://nextcloud.micropole.com (Let it about 2 minutes to boot correctly)       
+💼 Bitwarden:                https://bitwarden.micropole.com
+📝 Drawio:                   https://drawio.micropole.com     
+📜 codiMD:                   https://codimd.micropole.com 
+💰 Invoice Ninja:            https://invoiceninja.micropole.com     
+📖 logseq:                   https://logseq.micropole.com     
+
+
+🎉 Explore and Enjoy! 🎉
+
+👋 Greetings from your friendly cyber-intern! 👾

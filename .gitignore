@@ -1,7 +1,0 @@
-domain/*/.vagrant
-services/packer/output-vagrant/.vagrant
-services/packer/output-vagrant/.vagrant/*
-services/*/.vagrant
-molecule/molecule/default/playbooks/*
-domain/cyfun/identify/risk/trivy-cache/*
-domain/cyfun/identify/risk/trivy-reports/*

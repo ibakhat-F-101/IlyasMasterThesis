@@ -1,4 +1,0 @@
-- [[Antoine-weekly-work-organization]]
-- [[Mathis-weekly-work-organization]]
--
--

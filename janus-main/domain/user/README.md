@@ -1,14 +1,14 @@
 ## Available services : 
 
-💌 Mattermost + Focalboard:  http://10.10.10.13:80  
-🔁 SyncThing:                http://10.10.10.14:80           
-📞 Jitsi Meet:               https://10.10.10.15:443  
-📂 Nextcloud:                http://10.10.10.16:80     
-💼 Bitwarden:                https://10.10.10.17:443     
-📝 Drawio:                   https://10.10.10.18:443     
-📜 codiMD:                   http://10.10.10.19:80  
-💰 Invoice Ninja:            http://10.10.10.20:80      
-📖 logseq:                   http://10.10.10.21:80 
+💌 Mattermost + Focalboard:  http://localhost:8081  
+🔁 SyncThing:                http://localhost:8082           
+📞 Jitsi Meet:               https://localhost:8443
+📂 Nextcloud:                http://localhost:8084
+💼 Bitwarden:                https://localhost:8444
+📝 Drawio:                   https://localhost:8446     
+📜 codiMD:                   http://localhost:8086  
+💰 Invoice Ninja:            http://localhost:8087      
+📖 logseq:                   http://localhost:8088  
 
 
 ## Mattermost

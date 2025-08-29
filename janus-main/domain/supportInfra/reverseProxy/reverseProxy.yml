@@ -1,0 +1,77 @@
+---
+- name: Common tasks
+  hosts: 10.10.13.12
+  connection: local
+  gather_facts: false
+  remote_user: "{{ user_var }}"
+
+  vars_files:
+    - ../local_or_remote.yml
+
+  tasks:
+    - name: Create directory for nginx files
+      file:
+        path: /home/{{user_var}}/nginx
+        state: directory
+
+    - name: Generate SSL certificate directory
+      file:
+        path: /home/{{ user_var }}/nginx/certs
+        state: directory
+
+    - name: Generate self-signed SSL certificate
+      command: >
+        openssl req -x509 -nodes -days 365 -newkey rsa:2048
+        -keyout /home/{{ user_var }}/nginx/certs/nginx.key
+        -out /home/{{ user_var }}/nginx/certs/nginx.crt
+        -subj "/CN=localhost"
+      args:
+        creates: /home/{{ user_var }}/nginx/certs/nginx.crt
+      become: true
+
+    - name: Copy nginx configuration files
+      copy:
+        src: config
+        dest: /home/{{ user_var }}/nginx
+        owner: "{{ user_var }}"
+        group: "{{ user_var }}"
+        mode: 0644
+
+    - name: Pull the nginx docker image
+      become: true
+      docker_image:
+        name: nginx
+        source: pull
+
+    - name: Install apache2-utils
+      become: true
+      apt:
+        name: apache2-utils
+        state: present
+
+    - name: Generate .htpasswd file
+      command: htpasswd -b -c /home/{{ user_var }}/nginx/.htpasswd root root
+      args:
+        creates: /home/{{ user_var }}/nginx/.htpasswd
+
+    - name: Start nginx container
+      become: true
+      docker_container:
+        name: nginx
+        image: nginx
+        state: started
+        ports:
+          - 80:80
+          - 443:443
+        volumes:
+          - /home/{{user_var}}/nginx/config/nginx.conf:/etc/nginx/nginx.conf
+          - /home/{{ user_var }}/nginx/config/domain:/etc/nginx/domain
+          - /home/{{ user_var }}/nginx/certs:/etc/nginx/certs
+          - /home/{{ user_var }}/nginx/.htpasswd:/etc/nginx/.htpasswd
+        restart_policy: always
+
+    - name: Create log folder in the container
+      community.docker.docker_container_exec:
+        container: nginx
+        command: mkdir -p /var/log/nginx/
+      become: true

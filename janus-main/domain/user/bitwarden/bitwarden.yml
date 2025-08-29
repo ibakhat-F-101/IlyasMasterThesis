@@ -3,7 +3,7 @@
 # All commands except those downgraded need sudo rights
 ########################################
 - name: Configure Bitwarden
-  hosts: 10.10.10.12 moleculeTest
+  hosts: 127.0.0.1 moleculeTest
   gather_facts: false
   become: true
   remote_user: "{{ user_var }}"
@@ -49,7 +49,7 @@
     admin_settings_admins: marco.luyckx@ulb.be
     ########################################
     # "{{ username_admin_settings_admins }}" will provide access\
-    # to the Admin Portal from that email address : https://10.10.10.12/admin
+    # to the Admin Portal from that email address : https://127.0.0.1:8444/admin
     # The portal uses a secure means of passwordless authentication.
     # When users attempt to login, a secure link is sent to their email address.
     ########################################

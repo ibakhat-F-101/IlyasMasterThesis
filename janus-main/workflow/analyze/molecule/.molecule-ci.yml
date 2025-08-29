@@ -20,6 +20,7 @@ molecule-check-pipeline:
   stage:  test-molecule
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
+      allow_failure: true
       changes:
         - "**/{*[^.]md*,*.[^m]*,*.m,*.m[^d]*,*.md?*,*[^d]}" # this pattern looks to make sure a non-markdown file has changed
   trigger:

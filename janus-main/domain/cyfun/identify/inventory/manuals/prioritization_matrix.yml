@@ -1,0 +1,129 @@
+default:
+  classification: internal
+  criticality: medium
+  value: moderate
+
+rules:
+
+  # Logiciels auto-détectés
+  software_auto:
+    - match: bitwarden
+      classification: confidential
+      criticality: high
+      value: very_high
+
+    - match: invoiceninja
+      classification: internal
+      criticality: medium
+      value: high
+
+    - match: nextcloud
+      classification: internal
+      criticality: high
+      value: high
+
+    - match: mattermost
+      classification: internal
+      criticality: medium
+      value: moderate
+
+    - match: codimd
+      classification: internal
+      criticality: low
+      value: moderate
+
+    - match: syncthing
+      classification: internal
+      criticality: medium
+      value: moderate
+
+    - match: logseq
+      classification: internal
+      criticality: low
+      value: low
+
+    - match: drawio
+      classification: public
+      criticality: low
+      value: low
+
+    - match: jitsi
+      classification: internal
+      criticality: low
+      value: low
+
+    - match: yourls
+      classification: public
+      criticality: low
+      value: low
+
+  #  Logiciels manuels
+  software_manual:
+    - match: BOB
+      classification: confidential
+      criticality: critical
+      value: very_high
+
+    - match: Sage
+      classification: confidential
+      criticality: critical
+      value: very_high
+
+    - match: Google Workspace
+      classification: confidential
+      criticality: high
+      value: high
+
+    - match: Office 365
+      classification: internal
+      criticality: medium
+      value: high
+
+  # Informations sensibles
+  information_types:
+    - match: Client Data
+      classification: confidential
+      criticality: high
+      value: very_high
+
+    - match: Accounting Documents
+      classification: confidential
+      criticality: high
+      value: high
+
+    - match: Credentials and Access Information
+      classification: critical
+      criticality: critical
+      value: very_high
+
+    - match: Client Communications
+      classification: confidential
+      criticality: medium
+      value: moderate
+
+    - match: Internal HR Data
+      classification: confidential
+      criticality: medium
+      value: moderate
+
+    - match: System Logs
+      classification: internal
+      criticality: low
+      value: low
+
+  #  Actifs matériels manuels (optionnel si enrichis)
+  assets_manual:
+    - match: laptop
+      classification: internal
+      criticality: medium
+      value: moderate
+
+    - match: printer
+      classification: internal
+      criticality: low
+      value: low
+
+    - match: router
+      classification: internal
+      criticality: high
+      value: high

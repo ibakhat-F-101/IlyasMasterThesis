@@ -1,1 +1,0 @@
-The inventory.ini file is used to specify the IP address ranges utilized for the domain within the project.

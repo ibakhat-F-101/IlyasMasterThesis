@@ -19,5 +19,7 @@ platforms:
     provision: true
 provisioner:
   name: ansible
+  options:
+    limit: moleculeTest
 verifier:
   name: ansible

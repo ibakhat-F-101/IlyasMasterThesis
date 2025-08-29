@@ -1,6 +1,6 @@
 ---
 - name: Configure Nextcloud
-  hosts: 10.10.10.12 moleculeTest
+  hosts: 127.0.0.1 moleculeTest
   gather_facts: false
   connection: local
   remote_user: "{{user_var}}"
@@ -23,7 +23,7 @@
     # Persistent data directory on the host
     # It is NORMAL that it is vagrant here
     nextcloud_data_dir: /home/vagrant/nextcloud/data
-    nextcloud_trusted_domains: 10.10.10.16 nextcloud.micropole.com 10.10.13.12
+    nextcloud_trusted_domains: 127.0.0.1 nextcloud.micropole.com 10.10.13.12
     # SMTP credentials : this link is very useful to understand the config:
     # https://github.com/nextcloud/docker/issues/1187
     smtp_host: mail.gmx.com

@@ -1,0 +1,69 @@
+# ────────────────────────────────────────────────────────────────
+# Legal rules & cybersecurity for the accounting sector
+# ────────────────────────────────────────────────────────────────
+sector_rules:
+  sector_name: "Accounting (Belgium)"
+  last_updated: "2025-06-10"
+
+  intro: |
+    This document explains the main legal and cybersecurity rules for our accounting firm in Belgium.
+    It helps meet **CyFun ID.GV-3** (governance) and refers to **NIS2**, active since October 2024.
+    All team members (managers, accountants, secretary) must know these rules.
+    The **Directive Manager** ensures they are followed.
+
+  legal_sections:
+    - title: "1.1 General Data Protection Regulation (GDPR)"
+      content: |
+        We handle clients personal and financial data.
+        Data must be safe (strong passwords, encryption, secure backups).
+        Clients can ask to see, change, or delete their data.
+        If there’s a data breach, we must tell the Belgian Data Protection Authority (APD) within 72 hours.
+
+    - title: "1.2 Belgian Accounting Law"
+      content: |
+        Accounting documents must be kept for at least 7 years.
+        Documents must be ready for tax authorities if requested.
+        Digital storage is allowed but must be secure and organized.
+
+    - title: "1.3 Confidentiality Rules"
+      content: |
+        As accountants, we must keep client data private.
+        Only authorized staff can access sensitive files.
+        Personal USB drives or private email accounts are not allowed.
+
+    - title: "1.4 NIS2 Directive (optional)"
+      content: |
+        Our firm may be an “important entity” or a supplier to critical sectors (e.g., healthcare, finance).
+        CyFun level 1 meets basic NIS2 needs, but extra steps (e.g., audits, documentation) may be needed for full compliance.
+
+  actions_table:
+    - rule: "GDPR – Protect Client Data"
+      how: "Strong passwords, limited access, encrypted backups via JANUS"
+      who: "Directive Manager"
+
+    - rule: "GDPR – Client Data Requests"
+      how: "Clients can email to update or delete data"
+      who: "Secretary"
+
+    - rule: "GDPR – Report Data Breach"
+      how: "Process in place, reviewed yearly"
+      who: "Directive Manager"
+
+    - rule: "Accounting – 7-Year Storage"
+      how: "Store documents (e.g. on Nextcloud, set up by JANUS)"
+      who: "Accountant"
+
+    - rule: "Confidentiality"
+      how: "Work accounts only"
+      who: "All Employees"
+
+    - rule: "NIS2 – Supplier Security (if applicable)"
+      how: "Check suppliers yearly"
+      who: "Directive Manager"
+
+  review_history:
+    - date: "TO_BE_FILLED"
+      reviewed_by: "Directive Manager"
+      comment: "Initial version for CyFun and NIS2"
+
+  last_review: "TO_BE_FILLED"

@@ -16,19 +16,6 @@
       nextcloud: nextcloud.yml
 
   tasks:
-    - name: Configure eth1 interface
-      become: true
-      ansible.builtin.blockinfile:
-        path: /etc/network/interfaces
-        block: |
-          {% for ip in range(range_ip_start|int, range_ip_end|int + 1) %}
-          iface eth1 inet static
-          address 10.10.10.{{ ip }}
-          netmask 255.255.255.0
-          {% endfor %}
-      vars:
-        range_ip_start: 13
-        range_ip_end: 21
     ########################################
     - name: Restart networking service
       become: true

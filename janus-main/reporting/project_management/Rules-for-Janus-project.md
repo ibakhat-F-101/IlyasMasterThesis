@@ -1,33 +1,6 @@
+-> issue: two files for handbook ... https://gitlab.com/jdosec/janus/-/blob/main/documentation/rules/README.md see https://gitlab.com/jdosec/janus/-/issues/120
+
 # Rules for Janus project - New contributor's handbook
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 Before starting anything, you must read and approve these few rules by commenting: "I, [name], read, analyzed, familiarized myself, questioned, asked questions to better understand, understand and approve these principles, methodologies, rules and procedures and will abide by them."
 
@@ -92,7 +65,7 @@ Make sure the recommendations of the following sources are applied:
 - "Éléments de rédaction scientifique en informatique" by Hadrien Mélot from Faculté des Sciences, UMONS
 - "The 88 keys for identifying problems in logic and expression of thought in texts" Victor Thibaudeau, Faculty of philosophy, Laval University, 1998
 Please limit to 1 remark per paragraph of the provided text
----------
+
 
 ## KMS
 - Logseq is the kms of choice
@@ -119,10 +92,14 @@ Please limit to 1 remark per paragraph of the provided text
 
 
 ## Delivering workpackages/projects
+- Continuous delivery and testing (at all times by all group members)
 - Takes time -> needs to be planned, scheduled, resources allocated, ...
 - Has many components (documentation, code, applied community conference white paper, applied community conference white paper's slides, recorded demos, hands one workshops, handover sessions, ...) which have to be "usability tested" i.e. handover. You should actively demonstrate that someone with no knowledge of the project, joining on that day, would be able to easily appropriate, run, continue and built upon it. Because that is the objective to reach. Anything less than that is useless.
 - Is essential (no delivery = ... no value delivered = no value)
 - During final delivery: everyone in the research group should have understood (any tangible deliverable: thesis, documentation, videos, etc.) and be able to safely replicate your results (workshop): "Yes but it works on my machine" = "It works on my stomach, I ate your pizza, I didn't deliver it" = no delivery = 0/20 as a grade
+- P.D.C.A. everything: Write issues (DONE, DOING, TODO): imagine (draft), analysis, design, implement, check, revise, ...
+- Module / Self-contained should be made standalone for reusability
+- Continuous integration to KMS and refactoring
 
 ## Coding style
 - Default & Python: https://peps.python.org/pep-0008/
@@ -131,6 +108,27 @@ Please limit to 1 remark per paragraph of the provided text
 - Any reviewed reference needs to have it's corresponding [review/id sheet](https://docs.google.com/presentation/d/1netzbVuA_6SSueuISigPa-KbD2fRnym7i_s4VrlpDJA/edit#slide=id.g106aecda60e_0_40) stored in the kms in a single format
 
 # Procedures
+
+## Joining
+- Start filling & maintaining the roadmap
+- Start writing new issues for every task, every improvement, every idea, every suggestion, every new tests, every new scanning tool to integrate, ... (should typically at least 10 per active day. 4-5 that you do that day, 4-5 for the future), review, discuss, improve, augment, execute/implement existing ones (based on the new information. SMART, the urgency, the RACI matrix, the ...)
+- Start recording your pomodoros https://docs.google.com/spreadsheets/d/16nG3G4i6YsK1znzWkhqAAuyKqIjlsNxo/edit#gid=64304003
+- Handbook
+- Group integration workshop(s) (replicate existing results, understand the what and how of now)
+- IPP
+- Prepare and maintain your plan 30/60/90 days x {stakeholders, team, yourself} matrix of SMART tasks with RACI
+- Each subproject's short description in README (allows others to join, prolong, integrate ...)
+- Each participant's tasks, activities, roles, responsibilities, ... pointed from README
+- Take roles in the core project
+- Start and continue contributing, refactoring, etc. the common shared KMSs (project (janus) & public (cyber-random)) (including tools, bibliographic reference sheets, workshops, ... produce, synthetise, refactor and maintain what you learn, share ... "don't make others reinvent/discover the wheel or invent/PDCA how to make a furniture ... instead produce and share an minimalistic IKEA style manual "this is the shortest path to reach my understanding")
+- Start and continue reviewing each other's contributions/productions (see archives and more)
+
+## Leaving / Exit
+- See delivery checklist
+- Continuity: Operation: Plan integration workshop delivery rehearsal and the real one 2 weeks later (allowing you to fix what needs to) with every project member
+- Continuity: Development: Find 1-2 people to join project and continue, improve, build upon your results (internships, thesis, ...) so that your "focus" in the project does not die (nothing is ever finished). Aim for them to join before you leave and perform handover
+- Continuity: Factorisation & Outside communication: Self-contained components public release with corresponding documentation, communication material (slides, videos, demos, etc. ready to be used and presented in front of an audience by any project member). Main project should "import" (git submodules?) those self-contained/atomic components.
+- Have in your defense (thesis, internship etc.) slideshow / report an appendix on project management with screenshot to illustrate that you have satisfied all the requirements/checklists/objectives etc. defined for the project with metrics/KPI (issues filled, etc.) ("I had as objective for the literature review to review at least 150 scientific papers, I did 163, the bibliographic sheets are here, he is a sample, I therefore consider that the SMART objective is achieved ...")
 
 # Learning / Must Reads
 Please share here the best resources you have on a topic. The ones with the most efficacy and efficiency. Shorter & easier = better. Many keywords don't have a best resource yet, they need one.
@@ -300,6 +298,74 @@ Please share here the best resources you have on a topic. The ones with the most
 - https://docs.hetzner.com/robot/dedicated-server/operating-systems/installimage
 - https://dazeb.dev/how-to-add-a-hetzner-storagebox-to-proxmox-with-smb-cifs/
 - https://github.com/kpma1985/ansible_proxmox_hetzner https://forum.proxmox.com/threads/ansible-playbook-for-hetzner-incl-opnsense.116732/
+
+# Checklists
+- Roadmap (google spreadsheet, maintained)
+- Security
+  - Are we in as much control of the chain of custody of data? (including automated tests) 
+  - Are we in as much control of the manufacturing process? (building, deployment)
+  - Are we in as much control of the runtime environment? (monitoring, alerts, detection drifts, ...)
+  - Are we in as much control of the ingredients used in our manufacturing and running at runtime / SBOM? (including automated tests) (vms, containers, all the "include")
+  - Are these responsibilities documented, controlled by humans with redundancy? Is handover already pre-arranged?
+- Deliveries
+  - Published in archives for future?
+  - Replication of results
+  - Project management conclusion reporting
+  - Lessons learned and future work
+    - Communication
+    - Documentation
+    - Integrated to project management tools (gitlab issues), human and project work pipeline
+  - Workshops
+    - Devs
+    - Architects
+    - Admin
+    - Cyber
+    - Lead
+  - Standalone Packages
+    - Repositories: Self-contained modules in public access (owned by project owner) and integrated as external resource
+    - Pipelines
+  - Integrations projects
+    - Repositories
+    - Pipelines
+- Integration
+  - Code works
+    - Automated tests all work
+    - Human tests all work
+  - Documented
+    - Project management
+      - Mission, purpose
+      - Processes
+      - Objectives
+      - Metrics
+      - Tasks, milestones, packages detailed
+        - Past
+        - Present
+        - Future
+        - Done
+        - In progress
+        - To do
+    - Architect
+    - Project workflow
+    - Processes
+      - Human
+      - Machine
+    - Code
+    - User doc
+    - Admin doc
+    - Cyber doc
+  - Team
+    - With your contributions, All team members can
+      - Use
+      - Deploy
+      - Modify
+      - Explain
+      - Integrate
+      - Present
+      - Demonstrate
+      - Justify
+      - Sell/convince to use, improve, join project
+    - A new team member can reach your stage of mastery, understanding, running and operating in minimum cost (documented shortest path, minimal readings, etc.)
+
 -------------------------------------------------------------------
 
 
@@ -309,3 +375,4 @@ Please share here the best resources you have on a topic. The ones with the most
 - [x] I, Querinjean Arnaud, read, analyzed, questioned, understand and approve these principles, methodologies, rules and procedures and will abide by them.
 - [x] I, De Sousa Barros Leal Mendo, read, analyzed, questioned, understand and approve these principles, methodologies, rules and procedures and will abide by them.
 - [x] I, Bakhat Ilyas, read, analyzed, questioned, understand and approve these principles, methodologies, rules and procedures and will abide by them.
+- [x] I, Manuelle Ndamtang, read, analyzed, questioned, understand and approve these principles, methodologies, rules and procedures and will abide by them.
